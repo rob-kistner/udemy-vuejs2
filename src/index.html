@@ -11,48 +11,53 @@
 </head>
 <body>
 
+<header class="container border-bottom border-secondary my-3">
+    <h4>Description&hellip;</h4>
+    <ul>
+        <li>Two-way binding with <strong>v-model</strong></li>
+        <li>Computed properties</li>
+    </ul>
+</header>
 
-<div id="app" class="container mt-5">
-    <!--
-        $event is a built-in object refering to
-        the current object's event object
-    -->
-    <button class="btn btn-primary" v-on:click="increase(2, $event)">Click Me</button>
-    <button class="btn btn-primary" v-on:click="counter++">Click Me</button>
-    <p>{{counter*2 > 10 ? 'greater than 10...' : 'smaller than 10...'}}</p>
-    <p v-on:mousemove="updateCoords">Coordinates: {{ x }} / {{ y }}
-        <span v-on:mousemove.stop="">DEAD SPOT</p>
-    <!--
-        the .enter and .space limit key events
-        to the enter and space keys
-    -->
-    <input type="text" v-on:keyup.enter.space="alertMe" />
+<div id="app" class="container">
+    <button class="btn btn-primary" v-on:click='counter++'>Increase</button>
+    <button class="btn btn-primary" v-on:click='counter--'>Decrease</button>
+    <button class="btn btn-primary" v-on:click='secondCounter++'>Increase 2nd</button>
+    <p>Counter: {{ counter }}</p>
+    <p>Result: From Method = {{ result() }} | From Computer = {{ output }}</p>
+    <p>Result: {{ secondCounter }}</p>
 </div>
+
 
 <script>
 
-new Vue({
+const vue = new Vue({
     el: '#app',
     data: {
         counter: 0,
-        x: 0,
-        y: 0
+        secondCounter: 0
+    },
+    computed: {
+        output: function() {
+            return this.counter > 5 ? 'greater than 5' : 'less than 5';
+        }
+    },
+    watch: {
+        counter: function(val) {
+            var _this = this;
+            setTimeout(function() {
+                _this.counter = 0
+            }, 5000);
+        }
     },
     methods: {
-        increase: function(step, event) {
-            this.counter += step;
-            console.log(event);
-        },
-        updateCoords: function( event ) {
-            this.x = event.clientX;
-            this.y = event.clientY;
-        },
-        alertMe: function(e) {
-            alert('Vue alert, field value is: ' + e.target.value);
+        result: function() {
+            return this.counter > 5 ? 'greater than 5' : 'less than 5';
         }
     }
+
 });
-    
+
 </script>
 
 </body>
