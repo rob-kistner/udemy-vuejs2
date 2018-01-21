@@ -12,20 +12,14 @@
 <body>
 
 <header class="container border-bottom border-secondary my-3">
-    <h4>Description&hellip;</h4>
-    <ul>
-        <li>Two-way binding with <strong>v-model</strong></li>
-        <li>Computed properties</li>
-    </ul>
+    <h4>Assignment</h4>
 </header>
 
 <div id="app" class="container">
-    <button
-        class="btn btn-primary"
-        @click="changeLink">
-            Click to change link
-    </button>
-    <a :href="link">LINK</a>
+    <p>Current value: {{ value }}</p>
+    <button @click="value += 5">Add 5</button>
+    <button @click="value += 1">Add 1</button>
+    <p class="h5">Result: {{ result }}</p>
 </div>
 
 
@@ -34,11 +28,19 @@
 const vue = new Vue({
     el: '#app',
     data: {
-        link: "http://www.google.com"
+        value: 0
     },
-    methods: {
-        changeLink() {
-            this.link = 'http://www.apple.com'
+    computed: {
+        result: function() {
+            return this.value == 37 ? 'Done!' : 'Not there yet, keep trying...';
+        }
+    },
+    watch: {
+        value: function() {
+            var _this = this;
+            setTimeout(function() {
+                _this.value = 0;
+            }, 5000);
         }
     }
 });
