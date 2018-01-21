@@ -20,12 +20,12 @@
 </header>
 
 <div id="app" class="container">
-    <button class="btn btn-primary" v-on:click='counter++'>Increase</button>
-    <button class="btn btn-primary" v-on:click='counter--'>Decrease</button>
-    <button class="btn btn-primary" v-on:click='secondCounter++'>Increase 2nd</button>
-    <p>Counter: {{ counter }}</p>
-    <p>Result: From Method = {{ result() }} | From Computer = {{ output }}</p>
-    <p>Result: {{ secondCounter }}</p>
+    <button
+        class="btn btn-primary"
+        @click="changeLink">
+            Click to change link
+    </button>
+    <a :href="link">LINK</a>
 </div>
 
 
@@ -34,28 +34,13 @@
 const vue = new Vue({
     el: '#app',
     data: {
-        counter: 0,
-        secondCounter: 0
-    },
-    computed: {
-        output: function() {
-            return this.counter > 5 ? 'greater than 5' : 'less than 5';
-        }
-    },
-    watch: {
-        counter: function(val) {
-            var _this = this;
-            setTimeout(function() {
-                _this.counter = 0
-            }, 5000);
-        }
+        link: "http://www.google.com"
     },
     methods: {
-        result: function() {
-            return this.counter > 5 ? 'greater than 5' : 'less than 5';
+        changeLink() {
+            this.link = 'http://www.apple.com'
         }
     }
-
 });
 
 </script>
