@@ -5,7 +5,14 @@
   "repository": "https://github.com/rob-kistner/udemy-vuejs2.git",
   "author": "rob-kistner",
   "license": "MIT",
+  "scripts": {
+    "start": "lite-server"
+  },
   "dependencies": {
+    "bootstrap": "^4.0.0",
     "vue": "^2.5.13"
+  },
+  "devDependencies": {
+    "lite-server": "^2.3.0"
   }
 }

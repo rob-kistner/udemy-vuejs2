@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VueJS 2</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="./vue.js"></script>
+</head>
+<body>
+
+
+<div id="app" class="container mt-5">
+    <!--
+        $event is a built-in object refering to
+        the current object's event object
+    -->
+    <button class="btn btn-primary" v-on:click="increase(2, $event)">Click Me</button>
+    <button class="btn btn-primary" v-on:click="counter++">Click Me</button>
+    <p>{{counter*2 > 10 ? 'greater than 10...' : 'smaller than 10...'}}</p>
+    <p v-on:mousemove="updateCoords">Coordinates: {{ x }} / {{ y }}
+        <span v-on:mousemove.stop="">DEAD SPOT</p>
+    <!--
+        the .enter and .space limit key events
+        to the enter and space keys
+    -->
+    <input type="text" v-on:keyup.enter.space="alertMe" />
+</div>
+
+<script>
+
+new Vue({
+    el: '#app',
+    data: {
+        counter: 0,
+        x: 0,
+        y: 0
+    },
+    methods: {
+        increase: function(step, event) {
+            this.counter += step;
+            console.log(event);
+        },
+        updateCoords: function( event ) {
+            this.x = event.clientX;
+            this.y = event.clientY;
+        },
+        alertMe: function(e) {
+            alert('Vue alert, field value is: ' + e.target.value);
+        }
+    }
+});
+    
+</script>
+
+</body>
+</html>
