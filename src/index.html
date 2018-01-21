@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,45 +8,54 @@
     <title>VueJS 2</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/styles.css" />
-    <script src="./vue.js"></script>
+    <script src="./js/vue.js"></script>
 </head>
+
 <body>
 
-<header class="container border-bottom border-secondary my-3">
-    <h4>Assignment</h4>
-</header>
+    <header class="container border-bottom border-secondary my-3">
+        <h4>CSS Classes</h4>
+    </header>
 
-<div id="app" class="container">
-    <p>Current value: {{ value }}</p>
-    <button @click="value += 5">Add 5</button>
-    <button @click="value += 1">Add 1</button>
-    <p class="h5">Result: {{ result }}</p>
-</div>
+    <!--
+        Add names in a javascript object within the v-bind:class="{}" 
+        attributes of an html element, note the use of two classes based 
+        on a "not" state
+    -->
+    <div id="app" class="container">
+        <div class="my-5">
+            <div class="demo" @click="attachRed = !attachRed" :class="divClasses"></div>
+            <div class="demo" :class="[color, {red: attachRed}]"></div>
+            <div class="demo" :class="color"></div>
+        </div>
+        <div class="my-5">
+            <!-- <input type="text" v-model="color"> -->
+            <select v-model="color">
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+            </select>
+        </div>
+    </div>
 
-
-<script>
-
-const vue = new Vue({
-    el: '#app',
-    data: {
-        value: 0
-    },
-    computed: {
-        result: function() {
-            return this.value == 37 ? 'Done!' : 'Not there yet, keep trying...';
-        }
-    },
-    watch: {
-        value: function() {
-            var _this = this;
-            setTimeout(function() {
-                _this.value = 0;
-            }, 5000);
-        }
-    }
-});
-
-</script>
+    <script>
+        const vue = new Vue({
+            el: '#app',
+            data: {
+                attachRed: false,
+                color: 'green'
+            },
+            computed: {
+                divClasses: function() {
+                    return {
+                        red: this.attachRed,
+                        blue: !this.attachRed
+                    };
+                }
+            }
+        });
+    </script>
 
 </body>
+
 </html>
