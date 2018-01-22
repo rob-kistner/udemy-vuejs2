@@ -14,7 +14,7 @@
 <body>
 
     <header class="container border-bottom border-secondary my-3">
-        <h4>CSS Classes</h4>
+        <h4>CSS Styles Attached Dynamically</h4>
     </header>
 
     <!--
@@ -23,34 +23,36 @@
         on a "not" state
     -->
     <div id="app" class="container">
-        <div class="my-5">
-            <div class="demo" @click="attachRed = !attachRed" :class="divClasses"></div>
-            <div class="demo" :class="[color, {red: attachRed}]"></div>
-            <div class="demo" :class="color"></div>
-        </div>
-        <div class="my-5">
-            <!-- <input type="text" v-model="color"> -->
-            <select v-model="color">
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-                <option value="blue">Blue</option>
-            </select>
-        </div>
+
+        <div class="demo" :style="{'backgroundColor': color}"></div>
+        <div class="demo" :style="myStyle"></div>
+        <div class="demo" :style="[myStyle, {height: width + 'px'}]"></div>
+
+        <hr>
+
+        <select v-model="color">
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="blueviolet">Blue Violet</option>
+            <option value="greenyellow">Green-Yellow</option>
+        </select>
+
     </div>
 
     <script>
         const vue = new Vue({
             el: '#app',
             data: {
-                attachRed: false,
-                color: 'green'
+                color: 'gray',
+                width: 50,
             },
             computed: {
-                divClasses: function() {
+                myStyle: function() {
                     return {
-                        red: this.attachRed,
-                        blue: !this.attachRed
-                    };
+                        backgroundColor: this.color,
+                        width: this.width + 'px'
+                    }
                 }
             }
         });
