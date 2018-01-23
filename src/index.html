@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>VueJS 2</title>
+    <title>VueJS 2 | Conditionals &amp; Lists</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/styles.css" />
     <script src="./js/vue.js"></script>
@@ -13,47 +13,47 @@
 
 <body>
 
-    <header class="container border-bottom border-secondary my-3">
-        <h4>CSS Styles Attached Dynamically</h4>
-    </header>
+    <!-- ----------------------------- -->
 
-    <!--
-        Add names in a javascript object within the v-bind:class="{}" 
-        attributes of an html element, note the use of two classes based 
-        on a "not" state
-    -->
     <div id="app" class="container">
-
-        <div class="demo" :style="{'backgroundColor': color}"></div>
-        <div class="demo" :style="myStyle"></div>
-        <div class="demo" :style="[myStyle, {height: width + 'px'}]"></div>
-
-        <hr>
-
-        <select v-model="color">
-            <option value="red">Red</option>
-            <option value="green">Green</option>
-            <option value="blue">Blue</option>
-            <option value="blueviolet">Blue Violet</option>
-            <option value="greenyellow">Green-Yellow</option>
-        </select>
-
+        <p v-if="show">You can see me!</p>
+        <p v-else>Now you see me!</p>
+        <template v-if="show">
+            <h1>Heading</h1>
+            <p>Inside a template</p>
+        </template>
+        <p v-show="show">Do you also see me?</p>
+        <button class="btn btn-primary" @click="show = !show">Switch</button>
     </div>
 
-    <script>
-        const vue = new Vue({
+    <!-- ----------------------------- -->
+
+    <footer class="container border-bottom border-secondary my-3">
+        <h4>VueJS: Conditionals &amp; Lists</h4>
+        <p>Included the following:</p>
+        <ul>
+            <li>
+                <strong>v-if-then-else</strong> statements</li>
+            <li>
+                <strong>template</strong> wrapper
+                <p class="note">NOTE: the below template wrapper doesn't appear in the actual code, it's just a vue-code only grouping for several
+                    elements, preventing you from having to wrap several elements in an enclosing element.</p>
+            </li>
+            <li>
+                <strong>v-show</strong> statement
+                <p class="note">Doesn't remove the element from the DOM, just forces a "display: none" css style on it.</p>
+            </li>
+    
+        </ul>
+    </footer>
+
+    <!-- ----------------------------- -->
+
+<script>
+        const vm = new Vue({
             el: '#app',
             data: {
-                color: 'gray',
-                width: 50,
-            },
-            computed: {
-                myStyle: function() {
-                    return {
-                        backgroundColor: this.color,
-                        width: this.width + 'px'
-                    }
-                }
+                show: true
             }
         });
     </script>

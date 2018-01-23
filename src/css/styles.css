@@ -1,15 +1,6 @@
-button {
-    margin: 1rem 0;
+p.note {
+    font-size: 0.85rem;
+    font-style: italic;
+    line-height: 1.4;
+    margin: 0.35rem 0 0.25rem 1rem;
 }
-
-.demo {
-    width: 100px;
-    height: 100px;
-    float: inline-block;
-    background-color: gray;
-    margin: 10px;
-    cursor: pointer;
-}
-.red   { background-color: red;   }
-.green { background-color: green; }
-.blue  { background-color: blue;  }
