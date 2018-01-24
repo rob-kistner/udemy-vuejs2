@@ -4,3 +4,28 @@ p.note {
     line-height: 1.4;
     margin: 0.35rem 0 0.25rem 1rem;
 }
+
+.healthbar {
+    background-color: #ddd;
+    height: 60px;
+}
+.healthbar-meter {
+    display: flex;
+    background-color: green;
+    color: #fff;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: 0.3s all;
+}
+.log.playerturn {
+    background-color: darkblue;
+    color: white;
+    padding: 0.25rem 1rem;
+}
+.log.monsterturn {
+    background-color: darkred;
+    color: white;
+    padding: 4px;
+}
