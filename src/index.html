@@ -15,49 +15,67 @@
 
     <!-- ----------------------------- -->
 
-    <div id="app" class="container">
-        <p v-if="show">You can see me!</p>
-        <p v-else>Now you see me!</p>
-        <template v-if="show">
-            <h1>Heading</h1>
-            <p>Inside a template</p>
-        </template>
-        <p v-show="show">Do you also see me?</p>
-        <button class="btn btn-primary" @click="show = !show">Switch</button>
-    </div>
+    <div id="app" class="container mt-5">
 
+        <!-- Note: look up what v-bind:key does, it was explained 
+        as storing the actual item instead of a slot, but wondering 
+        how this actually affects the item itself -->
+        <ul>
+            <li v-for="(ingredient, idx) in ingredients" :key="ingredient">{{ ingredient }} - {{ idx }}</li>
+        </ul>
+
+        <button class="btn btn-primary" @click="ingredients.push('spices')">Add New</button>
+
+        <hr>
+        <h4>Looping through objects...</h4>
+
+        <!-- Nest loops to loop through all key/values
+        in an object -->
+        <ul>
+            <li v-for="person in persons">
+                <div v-for="(value, key, index) in person">{{ index}} - {{ key }}: {{ value }} </div>
+            </li>
+        </ul>
+
+        <hr>
+        <h4>Looping through numbers...</h4>
+
+        <span v-for="n in 10">{{n}} </span>
+        
+        <hr>
+
+        <template v-for="(ingredient, idx) in ingredients">
+            <h1>{{ ingredient }}</h1>
+            <p>{{ idx }}</p>
+        </template>
+    </div>
+        
     <!-- ----------------------------- -->
 
-    <footer class="container border-bottom border-secondary my-3">
-        <h4>VueJS: Conditionals &amp; Lists</h4>
+    <footer class="container border-top border-secondary my-5 pt-5">
+        <h4>VueJS: Alt v-for syntax</h4>
         <p>Included the following:</p>
         <ul>
-            <li>
-                <strong>v-if-then-else</strong> statements</li>
-            <li>
-                <strong>template</strong> wrapper
-                <p class="note">NOTE: the below template wrapper doesn't appear in the actual code, it's just a vue-code only grouping for several
-                    elements, preventing you from having to wrap several elements in an enclosing element.</p>
-            </li>
-            <li>
-                <strong>v-show</strong> statement
-                <p class="note">Doesn't remove the element from the DOM, just forces a "display: none" css style on it.</p>
-            </li>
-    
+            <li><strong>v-if-then-else</strong> statements</li>    
         </ul>
     </footer>
 
     <!-- ----------------------------- -->
 
 <script>
-        const vm = new Vue({
-            el: '#app',
-            data: {
-                show: true
-            }
-        });
-    </script>
+
+const vm = new Vue({
+    el: '#app',
+    data: {
+        ingredients: ['meat', 'fruit', 'cookies'],
+        persons: [
+            {name: 'Max', age: 27, color: 'red'},
+            {name: 'Anna', age: 'unknown', color: 'blue'}
+        ]
+    }
+});
+
+</script>
 
 </body>
-
 </html>
