@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>VueJS 2 | The Vue Instance</title>
+    <title>VueJS 2 | The Vue Instance Lifecycle</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/styles.css" />
     <script src="./js/vue.js"></script>
@@ -13,29 +13,11 @@
 
 <body>
 
-<div id="app1" class="container mt-5">
-    
-    <p class="badge badge-primary" :style="{fontSize: '1.25rem', marginBottom: '0.5rem'}"> vm1 </p>
-
+<div id="app" class="container mt-5">
     <h1>{{title}}</h1>
-
-    <transition name="slide-fade">
-        <p v-if="counter > 0">{{subtitle}}</p>
-    </transition>
-    <button class="btn btn-dark" @click="counter++" ref="myButt on">Change Title</button>
-    <button class="btn btn-light" @click="reset()">Reset</button>
+    <button class="btn btn-primary" @click="title='Changed'">Update Title</button>
+    <button class="btn btn-dark" @click="destroy">Destroy</button>
 </div>
-
-<!-- APP2 -->
-<div id="app2" class="container mt-5">
-
-    <p class="badge badge-primary" :style="{fontSize: '1.25rem', marginBottom: '0.5rem'}"> vm2 </p>
-    <h1>{{title}}</h1>
-    <button class="btn btn-dark" @click="changeInstanceTitle">Toggle Style</button>
-</div>
-
-<div id="app3" class="container mt-5"></div>
-
 
 
 <div id="notes">
@@ -45,8 +27,7 @@
         <div class="container mt-5" v-if="shown">
             <h4 class="notecolor">Here's what we covered&hellip;</h4>
             <ul>
-                <li><strong>Mounting a Vue instance with $mount:</strong> Allowing you to access and alter the Vue instances from even vanilla javascript</li>
-                <li><strong>Components (beginner):</strong> Did a quick component example to show how to reuse template instances within an app.</li>
+                <li><strong>Lifecycles:</strong> Running code or updating instances during the running of the Vue instance in the browser.</li>
             </ul>
         </div>
     </transition>
@@ -57,37 +38,46 @@
 <script>
 
 
-var vm1 = new Vue({
+var vm = new Vue({
+    el: '#app',
     data: {
-        title: "The title of the first instance",
-        counter: 0
+        title: "The VueJS Instance"
     },
-    computed: {
-        subtitle: function() {
-            this.$refs.myButton.innerText = `Clicked ${this.counter} Times`;
-            return `...has been accessed ${this.counter} times`;
-        }
+
+    /* all lifecycle hooks */
+
+    beforeCreate: function() {
+        console.log("beforeCreate()");
     },
+    created: function() {
+        console.log("created()");
+    },
+    beforeMount: function() {
+        console.log("beforeMount()");
+    },
+    mounted: function() {
+        console.log("mounted()");
+    },
+    beforeUpdate: function() {
+        console.log("beforeUpdate()");
+    },
+    updated: function() {
+        console.log("updated()");
+    },
+    beforeDestroy: function() {
+        console.log("beforeDestroy()");
+    },
+    destroyed: function() {
+        console.log("destroyed()");
+    },
+
     methods: {
-        reset: function() {
-            this.counter = 0;
-            this.$refs.myButton.innerText = `Change Title`;
+        destroy: function() {
+            this.$destroy();
         }
     }
+
 });
-
-// mount the vm1 def
-vm1.$mount('#app1');
-
-
-var vm2 = new Vue({
-    el: '#app2',
-    data: {
-        title: "And this would be the second instance",
-        toggled: false
-    }
-});
-
 
 </script>
 
