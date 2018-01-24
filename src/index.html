@@ -22,50 +22,42 @@
     <transition name="slide-fade">
         <p v-if="counter > 0">{{subtitle}}</p>
     </transition>
-    <button class="btn btn-dark" @click="counter++" ref="myButton">Change Title</button>
+    <button class="btn btn-dark" @click="counter++" ref="myButt on">Change Title</button>
     <button class="btn btn-light" @click="reset()">Reset</button>
 </div>
 
-
+<!-- APP2 -->
 <div id="app2" class="container mt-5">
+
     <p class="badge badge-primary" :style="{fontSize: '1.25rem', marginBottom: '0.5rem'}"> vm2 </p>
     <h1>{{title}}</h1>
     <button class="btn btn-dark" @click="changeInstanceTitle">Toggle Style</button>
 </div>
 
+<div id="app3" class="container mt-5"></div>
+
+
+
 <div id="notes">
     <button class="btn" @click="toggleNotes">Notes for this section&hellip;</button>
     <hr>
     <transition name="slide-fade">
-    <div class="container mt-5" v-if="shown">
-        <h4 class="notecolor">Here's what we covered&hellip;</h4>
-        <ul>
-            <li><strong>Multiple Vue instances:</strong> assign to variables to allow for separate Vue instances on the page. Allow you to communicate between them.</li>
-            <li><strong>$refs and ref keys:</strong> these can be added to elements then referenced from pretty much ANY script on the page (i.e.: including outside the respective Vue instance) to affect objects.</li>
-        </ul>
-    </div>
+        <div class="container mt-5" v-if="shown">
+            <h4 class="notecolor">Here's what we covered&hellip;</h4>
+            <ul>
+                <li><strong>Mounting a Vue instance with $mount:</strong> Allowing you to access and alter the Vue instances from even vanilla javascript</li>
+                <li><strong>Components (beginner):</strong> Did a quick component example to show how to reuse template instances within an app.</li>
+            </ul>
+        </div>
     </transition>
 </div>
 
 
-    <!--
-    | this is a comment
-    | at the very top
-    | of the file
-    -->
-
 <script src="./js/notes.js"></script>
 <script>
 
-    /*------------------------ 
-    
-    And a javascript
-    comment as well
-    at the bottom
-    
-    ------------------------ */
+
 var vm1 = new Vue({
-    el: '#app1',
     data: {
         title: "The title of the first instance",
         counter: 0
@@ -84,18 +76,18 @@ var vm1 = new Vue({
     }
 });
 
+// mount the vm1 def
+vm1.$mount('#app1');
+
+
 var vm2 = new Vue({
     el: '#app2',
     data: {
         title: "And this would be the second instance",
         toggled: false
-    },
-    methods: {
-        changeInstanceTitle: function() {
-
-        }
     }
 });
+
 
 </script>
 
