@@ -1,0 +1,18 @@
+
+$blue: #538cd5;
+
+.container {
+	width: 800px;
+	margin: 3rem auto 0;
+}
+
+button {
+	border: 0;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	text-transform: uppercase;
+	background-color: $blue;
+	color: white;
+	border-radius: 4px;
+	box-shadow: 0 2px 1px rgba(0,0,0,0.3);
+}
