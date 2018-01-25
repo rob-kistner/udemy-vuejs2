@@ -3,13 +3,21 @@
         <h1>The User Component</h1>
         <p>I'm an awesome User!</p>
         <button @click="changeName">Change My Name</button>
-        <hr>
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <app-user-detail :myName="name" />
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <app-user-edit />
+		<p>The name is {{name}}</p>
+		<p>Age is {{age}}</p>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<!-- listens to nameWasReset event from child -->
+				<app-user-detail
+					:userName="name"
+					@nameWasReset="name = $event"
+					:resetFn="resetName"
+					:userAge="age" />
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<app-user-edit
+					:userAge="age" 
+					@ageWasEdited="age = $event" />
             </div>
         </div>
     </div>
@@ -26,13 +34,18 @@
         },
         data: function() {
             return {
-                name: 'Max'
+                name: 'Max',
+				age: 27
             }
         },
         methods: {
             changeName() {
                 this.name = 'Anna';
-            }
+            },
+			resetName() {
+				this.name = 'Max';
+			}
+
         }
     }
 </script>
