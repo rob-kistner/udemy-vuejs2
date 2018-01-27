@@ -1,32 +1,59 @@
+<!--
+	|
+	| NOTE: SLOT RENDERING
+	| The content not attributed to a slot named becomes 
+	| the default content and will be rendered in order 
+	| within that slots location. As shown below, this could
+	| therefore render out of order.
+	|
+	| NOTE: DEFAULT CONTENT
+	| Below, there's no slot placeholder for the subtitle
+	| as defined in the child. The child's default content 
+	| as written in it's template will appear instead.
+	| Replace with something like "<h4 slot="subtitle>Content</h4>"
+	| and it will appear instead of the default content.
+	|
+-->
+
 <template>
-    <div class="container">
-        <app-header></app-header>
-        <hr>
-        <div class="row">
-            <servers></servers>
-            <app-server-details></app-server-details>
-        </div>
-        <hr>
-        <app-footer></app-footer>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<app-quote>
+					<p>What about this paragraph???</p>
+					<h2 slot="title">{{quoteTitle}}</h2>
+					<h4 slot="subtitle">This is a subtitle</h4>
+					<p>This is a wonderful quote!!!</p>
+				</app-quote>
+			</div>
+		</div>
+	</div>
 </template>
 
-<script>
-    import Header from './components/Shared/Header.vue';
-    import Footer from './components/Shared/Footer.vue';
-    import Servers from './components/Server/Servers.vue';
-    import ServerDetails from './components/Server/ServerDetails.vue';
+<!--
+	|
+	| NOTE:
+	| Data from the parent can, of course, populate the 
+	| quote slot content
+	|
+-->
 
-    export default {
-        components: {
-            appHeader: Header,
-            Servers,
-            'app-server-details': ServerDetails,
-            'app-footer': Footer
-        }
-    }
+<script>
+	import Quote from './components/Quote.vue';
+
+	export default {
+		data() {
+			return {
+				quoteTitle: 'Here\'s the quote title...',
+			}
+		},
+		components: {
+			appQuote: Quote
+		}
+	}
+
 </script>
 
-<style>
+<style scoped>
 
 </style>
