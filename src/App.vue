@@ -1,54 +1,53 @@
 <template>
-	
-	<div class="container">
-		<div class="row">
-			<div class="col-12 pt-5">
-
-				<button class="btn" @click="selectedComponent = 'appQuote'">Quote</button>
-				<button class="btn" @click="selectedComponent = 'appAuthor'">Author</button>
-				<button class="btn" @click="selectedComponent = 'appNew'">New Quote</button>
-
-				<p class="mt-3">selectedComponent = <strong>{{selectedComponent}}</strong></p>
-
-				<!--
-					|
-					| NOTE:
-					| <keep-alive> prevents the component from
-					| being destroyed when dynamic component is
-					| switched
-					|
-				-->
-				<keep-alive>
-					<component :is="selectedComponent">	
-						<p>Default content</p>
-					</component>
-				</keep-alive>
-
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <app-header :quoteCount="quotes.length" :maxQuotes="maxQuotes"></app-header>
+        <app-new-quote @quoteAdded="newQuote"></app-new-quote>
+        <app-quote-grid :quotes="quotes" @quoteDeleted="deleteQuote"></app-quote-grid>
+        <div class="row">
+            <div class="col-12 text-center mt-4">
+                <div class="alert alert-info">
+                    Info: Click on a quote to delete it.
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-	import Quote from './components/Quote.vue';
-	import Author from './components/Author.vue';
-	import New from './components/New.vue';
+    import Header from './components/Header.vue';
+    import QuoteGrid from './components/QuoteGrid.vue';
+    import NewQuote from './components/NewQuote.vue';
 
-	export default {
-		data() {
-			return {
-				selectedComponent: 'appQuote'
-			}
-		},
-		components: {
-			appQuote: Quote,
-			appAuthor: Author,
-			appNew: New
-		}
-	}
-
+    export default {
+        components: {
+            appHeader: Header,
+            appQuoteGrid: QuoteGrid,
+            appNewQuote: NewQuote
+        },
+        data: function() {
+            return {
+                quotes: [
+                    "Just a quote to see something",
+                    "A bird in the hand is worth two in the bush",
+                    "Don't count your chickens before they hatch",
+                    ],
+                maxQuotes: 10
+            }
+        },
+        methods: {
+            newQuote(quote) {
+                if(this.quotes.length >= this.maxQuotes) {
+                    return alert('Please delete quotes first');
+                }
+                this.quotes.push(quote);
+            },
+            deleteQuote(index) {
+                // remove 1 element at index
+                this.quotes.splice(index, 1);
+            }
+        }
+    }
 </script>
 
-<style scoped>
-
+<style>
 </style>

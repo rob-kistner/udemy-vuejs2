@@ -1,56 +1,33 @@
 <template>
-	<div class="quote">
-		<div class="title">
-			<slot name="title"></slot>
-			<span><slot name="subtitle">The Subtitle</slot></span>
-		</div>
-		<hr>
-		<div>
-			<slot></slot>
+	<div class="col-sm-6 col-md-4 col-lg-3">
+		<div class="card">
+			<div class="card-text quote">
+				<slot></slot>
+			</div>
 		</div>
 	</div>
 </template>
 
-
 <script>
-	
+
 	export default {
-		
+
 	}
 
 </script>
 
-<!--
-	|
-	| NOTE:
-	| Scoped styles applied from the child will
-	| be the ones that actually apply to the component.
-	| Redefining styles in the parent won't do anything 
-	| to the child component.
-	|
--->
-
-<style scoped>
-
-.quote {
-	padding: 30px;
-	margin: 30px auto;
-	text-align: center;
-	border: 1px solid #ccc;
-	border-radius: 9px;
-	box-shadow: 0px 0px 10px rgba(200,50,0,0.5);
-}
-
-hr {
-	border-width: 3px;
-	border-color: gray;
-}
-
-.title {
-	font-style: italic;
-	color: blue;
-}
-.content {
-	color: blueviolet;
-}
+<style>
+	.card-text {
+		font-family: 'Arizonia', cursive;
+		font-size: 24px;
+		line-height: 1;
+		color: #6e6e6e;
+	}
+	.quote {
+		cursor: pointer;
+		padding: 0.8rem 1.5rem;
+	}
+	.quote:hover {
+		background-color: #ffe2e2;
+	}
 </style>
