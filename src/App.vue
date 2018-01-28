@@ -1,55 +1,49 @@
-<!--
-	|
-	| NOTE: SLOT RENDERING
-	| The content not attributed to a slot named becomes 
-	| the default content and will be rendered in order 
-	| within that slots location. As shown below, this could
-	| therefore render out of order.
-	|
-	| NOTE: DEFAULT CONTENT
-	| Below, there's no slot placeholder for the subtitle
-	| as defined in the child. The child's default content 
-	| as written in it's template will appear instead.
-	| Replace with something like "<h4 slot="subtitle>Content</h4>"
-	| and it will appear instead of the default content.
-	|
--->
-
-
 <template>
+	
 	<div class="container">
 		<div class="row">
-			<div class="col-12">
-				<app-quote>
-					<p>What about this paragraph???</p>
-					<h2 slot="title">{{quoteTitle}}</h2>
-					<h4 slot="subtitle">This is a subtitle</h4>
-					<p>This is a wonderful quote!!!</p>
-				</app-quote>
+			<div class="col-12 pt-5">
+
+				<button class="btn" @click="selectedComponent = 'appQuote'">Quote</button>
+				<button class="btn" @click="selectedComponent = 'appAuthor'">Author</button>
+				<button class="btn" @click="selectedComponent = 'appNew'">New Quote</button>
+
+				<p class="mt-3">selectedComponent = <strong>{{selectedComponent}}</strong></p>
+
+				<!--
+					|
+					| NOTE:
+					| <keep-alive> prevents the component from
+					| being destroyed when dynamic component is
+					| switched
+					|
+				-->
+				<keep-alive>
+					<component :is="selectedComponent">	
+						<p>Default content</p>
+					</component>
+				</keep-alive>
+
 			</div>
 		</div>
 	</div>
 </template>
 
-<!--
-	|
-	| NOTE:
-	| Data from the parent can, of course, populate the 
-	| quote slot content
-	|
--->
-
 <script>
 	import Quote from './components/Quote.vue';
+	import Author from './components/Author.vue';
+	import New from './components/New.vue';
 
 	export default {
 		data() {
 			return {
-				quoteTitle: 'Here\'s the quote title...',
+				selectedComponent: 'appQuote'
 			}
 		},
 		components: {
-			appQuote: Quote
+			appQuote: Quote,
+			appAuthor: Author,
+			appNew: New
 		}
 	}
 
