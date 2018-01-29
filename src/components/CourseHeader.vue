@@ -1,25 +1,25 @@
 <template>
 	<div>
-	<header class="container-fluid">
-		<div class="container">
-			<p class="title">Udemy: {{courseName}}</p>
-			<p class="section">Section {{sectionNum}}: {{sectionName}}</p>
-		</div>
-	</header>
-
+		<header class="container-fluid">
+			<div class="container">
+				<p class="title">Udemy: {{courseName}}</p>
+				<p class="section">Section {{sectionNum}}: {{sectionName}}</p>
+			</div>
+		</header>
 	</div>
-
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				courseName: 'VueJS 2 - The Complete Guide',
-				sectionNum: 11,
-				sectionName: 'Handling User Input with Forms'
+				courseName: "Understanding VueJS 2"
 			}
-		}
+		},
+		props: [
+			'sectionNum',
+			'sectionName'
+		]
 	};
 </script>
 
