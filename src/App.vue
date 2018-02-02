@@ -2,21 +2,17 @@
 	<div>
 		<course-header 
 			section-num="12" 
-			section-name="Registering Directives Locally" />
+			section-name="Assignment: Registering Directives Locally" />
 		<div class="container">
 			<div class="row justify-content-header">
 				<div class="col-sm-8 col-md-6">
-					<h1>Built-in Directives</h1>
-					<p v-text="'Some Text'"></p>
-					<p v-html="'<strong>Some Text</strong>'"></p>
-				</div>
-			</div>
-			<hr>
-			<div class="row justify-content-header">
-				<div class="col-sm-8 col-md-6">
-					<h1>Custom Directives</h1>
-					<p v-highlight:background.delayed="'red'">Color this</p>
-					<p v-local-hilite:background.delayed.blink="blink">Color this as well</p>
+					<h1>Custom Directive</h1>
+					<button v-customOn:click="clicked" class="btn btn-primary">CustomON Click</button>
+					<div
+						class="myblock" 
+						v-customOn:mouseenter="mouseEntered"
+						v-customOn:mouseleave="mouseLeft">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -27,62 +23,49 @@
 	import CourseHeader from './components/CourseHeader.vue';
 
 	export default {
-		data() {
-			return {
-				blink: {
-					mainColor: 'red', 
-					secondColor: 'gray', 
-					delay: 350
-				}
-			}
-		},
 		components: {
 			'course-header': CourseHeader
 		},
-		/*
-			local directive registration
-		------------------------------------------*/
 		directives: {
-			'local-hilite': {
-				bind(el, binding, vnode) {
-					// initializing & setting with a turnary
-					let delay = 0;
-					if(binding.modifiers['delayed'])
-						delay = 3000;
-					if(binding.modifiers['blink']) {
-						// binding.value.mainColor,
-						// binding.value.secondaryColor,
-						// and delay
-						// pulls object values from the passed object
-						//
-						let mainColor = binding.value.mainColor;
-						let secondColor = binding.value.secondColor;
-						let currentColor = mainColor;
-						setTimeout(() => {
-							setInterval( ()=> {
-								if(currentColor == secondColor ? currentColor = mainColor : currentColor = secondColor)
-								if (binding.arg == "background")
-									el.style.backgroundColor = currentColor;
-								else
-									el.style.color = currentColor;
-							}, binding.value.delay);
-						}, delay);
-					} else {
-						setTimeout(()=> {
-						if (binding.arg == "background")
-							el.style.backgroundColor = binding.value.mainColor;
-						else
-							el.style.color = binding.value.mainColor;
-						}, delay);
-					}
+			customOn: {
+				// not using vnode so not spec'ing it
+				// as the 3rd argument
+				bind(el, binding) {
+
+						// binding.value() calls the clicked()
+						// method since its named ("clicked") is
+						// the one that's passed to binding
+					// el.onclick = () => {
+					// 	binding.value();
+					// }
+
+						// registering any event to make it more
+						// generalized
+					const type = binding.arg;
+					const fn = binding.value;
+					el.addEventListener(type, fn);
 				}
+			}
+		},
+		methods: {
+			clicked() {
+				alert('I was clicked');
+			},
+			mouseEntered() {
+				console.log("I was entered");
+			},
+			mouseLeft() {
+				console.log("I was abandoned");
 			}
 		}
 	}
 </script>
 
 <style>
-
-	hr { border-color: #f00; }
-
+	.myblock {
+		width: 100px;
+		height: 100px;
+		margin-top: 1.5rem;
+		background-color: lightgreen;
+	}
 </style>
