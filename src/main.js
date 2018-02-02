@@ -1,15 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-	// global mixin
-Vue.mixin({
-	created() {
-		console.log("-- Global mixin created() hook");
-	}
-});
-
+Vue.filter('show-length', value => `${value} (${value.length})`);
 
 new Vue({
   el: '#app',
   render: h => h(App)
-});
+})

@@ -1,55 +1,78 @@
 <template>
-	<div>
-		<course-header
-			num="13"
-			name="Filters &amp; Mixins - About Mixins"
-			sep="|" />
-		<content-area>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-sm-8 col-md-6">
 
-			<h4 class="text-primary">Mixins</h4>
+				<h2 class="mt-3">Filters &amp; Mixins</h2>
+				<p>Text working on is: <strong>{{sample}}</strong></p>
 
-			<hr>
-			<h5>direct in app&hellip;</h5>
+				<hr>
 
-			<button class="btn btn-primary d-block my-3" @click="fruits.push('berries')">Add Berries</button>
-			<input type="text" v-model="filterText">
-			<ul class="list-unstyled">
-				<li v-for="fruit in filteredFruit">{{fruit}}</li>
-			</ul>
+				<!-- Exercise 1) -->
+				<!-- Build a local Filter which reverses the Text it is applied on -->
+				<h4>Exercise 1:</h4>
+				{{ sample | reverse }}
 
+				<hr>
 
-			<hr>
-			<h5>from imported component&hellip;</h5>
+				<!-- Exercise 2 -->
+				<!-- Build a global Filter which counts the length of a word and it appends it -->
+				<!-- Like this: "Test" => Gets Filtered to => "Test (4)" -->
+				<h4>Exercise 2:</h4>
+				{{ sample | show-length }}
 
-			<list />
+				<hr>
 
-		</content-area>
+				<!-- Exercise 3 -->
+				<!-- Do the same as in Exercises 1 & 2, now with Computed Properties -->
+				<h4>Exercise 3:</h4>
+				<p>Reversed: {{ compReverse }}</p>
+				<p>Show Length: {{ compShowLength }}</p>
+
+				<hr>
+
+				<!-- Exercise 4 -->
+				<!-- Share the Computed Property rebuilding Exercise 2 via a Mixin -->
+				<h4>Exercise 4:</h4>
+				<p>Original Mixin sample text: {{ mixSample }}</p>
+				<p>Mixin Reversed: {{ mixReverse }}</p>
+				<p>Mixin Show Length: {{ mixShowLength }}</p>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-	import CourseHeader from './partials/CourseHeader.vue';
-	import ContentArea from './partials/ContentArea.vue';
-	import List from './components/List.vue';
-	import { fruitMixin } from './fruitMixin';
+	import { sampleMixin } from './sampleMixin';
 
 	export default {
-		components: { CourseHeader, ContentArea, List },
 		data() {
 			return {
-					// replaces the value for the fruits array
-					// in the mixin, merging custom info with the
-					// default info...COOL!
-				fruits: ['kumkwat', 'onion', 'green pepper']
+				sample: "The Example Text",
+				mixSample: "Changed Mixin Text"
 			}
 		},
-		mixins: [ fruitMixin ],
+		filters: {
+			reverse: value => value.split("").reverse().join("")
+		},
+		computed: {
+			compReverse() {
+				return this.sample.split("").reverse().join("");
+			},
+			compShowLength() {
+				return `${this.sample} (${this.sample.length})`;
+			}
+		},
+		mixins: [ sampleMixin ]
 	}
 </script>
 
-<style>
-	hr {
-		border-color: #666;
-		margin: 2.5rem 0;
-	}
+<style scoped>
+
+hr {
+	border-color: #aaa;
+	border-width: 1px;
+	margin: 1.5rem 0;
+}
+
 </style>
