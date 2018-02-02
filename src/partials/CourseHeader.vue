@@ -2,8 +2,8 @@
 	<div>
 		<header class="container-fluid">
 			<div class="container">
-				<p class="title">Udemy: {{courseName}}</p>
-				<p class="section">Section {{sectionNum}}: {{sectionName}}</p>
+				<p class="title">Udemy: {{course | uc}}</p>
+				<p class="section">Section {{num}} {{sep}} {{name}}</p>
 			</div>
 		</header>
 	</div>
@@ -13,19 +13,28 @@
 	export default {
 		data() {
 			return {
-				courseName: "Understanding VueJS 2"
+				course: "Understanding VueJS 2"
 			}
 		},
-		props: [
-			'sectionNum',
-			'sectionName'
-		]
+		props: {
+			num: {},
+			name: {},
+			sep: {
+				type: String,
+				default: ":"
+			}
+		},
+		filters: {
+			uc(value) {
+				return value.toUpperCase();
+			}
+		}
 	};
 </script>
 
 <style scoped>
 	.container-fluid {
-		background-color: #bbb;
+		background-color: #b1b3b5;
 		margin-bottom: 2rem;
 	}
 	.container {
