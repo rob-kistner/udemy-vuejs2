@@ -29,7 +29,7 @@
 		margin-bottom: 2rem;
 	}
 	.container {
-		padding: 1rem;
+		padding: 1rem 1rem 1.5rem;
 		color: #fff;
 	}
 	.container p {
@@ -42,5 +42,7 @@
 		}
 	.section {
 		font-size: 1.75rem;
+		line-height: 1;
+		margin-top: 0.5rem;
 	}
 </style>
