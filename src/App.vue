@@ -56,6 +56,29 @@
 				<component :is="selectedComponent"></component>
 			</transition>
 
+			<hr>
+
+			<button class="btn btn-primary" @click="addItem">Add Item</button>
+			<ul class="list-group">
+				<!--
+					|
+					| For transition groups, keys are ALWAYS required
+					| 
+					|
+				-->
+				<transition-group name="slide">
+					<li
+						class="list-group-item" 
+						v-for="(number, idx) in numbers"
+						@click="removeItem(idx)"
+						style="cursor: pointer"
+						:key="number"
+						>
+						{{number}}
+					</li>
+				</transition-group>
+			</ul>
+
 		</content-area>
 	</div>
 </template>
@@ -79,7 +102,8 @@
 				load: true,
 				alertAnimation: 'fade',
 				elementWidth: 100,
-				selectedComponent: 'app-success'
+				selectedComponent: 'app-success',
+				numbers: [1,2,3,4,5]
 			}
 		},
 		methods: {
@@ -129,6 +153,16 @@
 			},
 			leaveCancelled(el) {
 				console.log('leaveCancelled');
+			},
+			addItem() {
+				const pos = Math.floor(Math.random() * this.numbers.length);
+					// the below implementation of splice uses splice 
+					// to add an item to the array in a random place
+					// rather than remove it
+				this.numbers.splice(pos, 0, this.numbers.length+1);
+			},
+			removeItem(idx) {
+				this.numbers.splice(idx, 1);
 			}
 
 		}
@@ -180,6 +214,17 @@
 		animation: slide-out 1s ease-out forwards;
 		transition: opacity 3s;
 		opacity: 0;
+		position: absolute;
+	}
+	/*
+		slide-move is attached to any element that needs to 
+		change it's place, especially useful in transition-groups
+
+		NOTE: must also add position:absolute to slide-leave-active to
+		allow the other items to smoothly move on remove
+	*/
+	.slide-move {
+		transition: transform 1s; /* used in the slide animation */
 	}
 
 	@keyframes slide-in {
