@@ -51,7 +51,10 @@
 
 			<hr>
 
-			
+			<button class="btn btn-primary my-3" @click="selectedComponent=='success-alert' ? selectedComponent = 'danger-alert' : selectedComponent = 'success-alert'">Toggle Components</button>
+			<transition name="fade" mode="out-in">
+				<component :is="selectedComponent"></component>
+			</transition>
 
 		</content-area>
 	</div>
@@ -60,17 +63,23 @@
 <script>
 	import CourseHeader from './components/CourseHeader.vue';
 	import ContentArea from './components/ContentArea.vue';
+	import DangerAlert from './components/DangerAlert.vue';
+	import SuccessAlert from './components/SuccessAlert.vue';
 
 	export default {
 		components: {
-			CourseHeader, ContentArea
+			CourseHeader,
+			ContentArea,
+			DangerAlert,
+			SuccessAlert
 		},
 		data() {
 			return {
 				show: false,
 				load: true,
 				alertAnimation: 'fade',
-				elementWidth: 100
+				elementWidth: 100,
+				selectedComponent: 'app-success'
 			}
 		},
 		methods: {
