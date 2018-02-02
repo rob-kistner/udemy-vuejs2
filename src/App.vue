@@ -2,24 +2,27 @@
 	<div>
 		<course-header
 			num="13"
-			name="Filters &amp; Mixins - Creating a Local Filter"
+			name="Filters &amp; Mixins - About Mixins"
 			sep="|" />
 		<content-area>
-			<h4 class="text-primary">Filters</h4>
 
-			<p>local: <strong>{{text | to-uppercase}}</strong></p>
-			<p>global: <strong>{{text | to-lowercase}}</strong></p>
-			<p>double-chained: <strong>{{text | to-uppercase | space-letters}}</strong></p>
+			<h4 class="text-primary">Mixins</h4>
 
 			<hr>
+			<h5>direct in app&hellip;</h5>
 
-			<h4 class="text-primary">Alternative to filters: using computed() instead</h4>
-			<p>Allows for a more complex filtering</p>
-
+			<button class="btn btn-primary d-block my-3" @click="fruits.push('berries')">Add Berries</button>
 			<input type="text" v-model="filterText">
 			<ul class="list-unstyled">
 				<li v-for="fruit in filteredFruit">{{fruit}}</li>
 			</ul>
+
+
+			<hr>
+			<h5>from imported component&hellip;</h5>
+
+			<list />
+
 		</content-area>
 	</div>
 </template>
@@ -27,38 +30,26 @@
 <script>
 	import CourseHeader from './partials/CourseHeader.vue';
 	import ContentArea from './partials/ContentArea.vue';
+	import List from './components/List.vue';
+	import { fruitMixin } from './fruitMixin';
 
 	export default {
-		components: { CourseHeader, ContentArea },
+		components: { CourseHeader, ContentArea, List },
 		data() {
 			return {
-				text: 'Hello There!',
-				fruits: [ 'apple', 'banana', 'kiwi', 'strawberry', 'blackberry' ],
-				filterText: ''
+					// replaces the value for the fruits array
+					// in the mixin, merging custom info with the
+					// default info...COOL!
+				fruits: ['kumkwat', 'onion', 'green pepper']
 			}
 		},
-		filters: {
-				// camelCase filter names can be represented 
-				// with dashes in the template as usual
-			toUppercase: value => value.toUpperCase(),
-				// mega one-liner:
-				// split string into array
-				// deny any spaces in the array
-				// join together with spaces and return it
-			spaceLetters: (value) => value.split("").filter(s=>s!=(' ')).join(" ")
-		},
-		computed: {
-				// javascript .filter's out values that
-				// don't match the filterText data fed 
-				// by the input field
-			filteredFruit() {
-				return this.fruits.filter( (item) => {
-					return item.match(this.filterText);
-				});
-			}
-		}
+		mixins: [ fruitMixin ],
 	}
 </script>
 
 <style>
+	hr {
+		border-color: #666;
+		margin: 2.5rem 0;
+	}
 </style>
