@@ -8,84 +8,17 @@
 
 			<button class="btn btn-primary" @click="show=!show">Show / Hide Alert</button>
 
-			<transition name="fade">
-				<!--
-					NOTE: v-show will work just as well as v-if
-					-->
-				<div class="alert alert-info" v-if="show">
-					Fade animation element
-				</div>
-			</transition>
+			<!-- 
+				The key="" setting flags that each alert is different/unique 
+				and Vue needs to treat them that way 
 
-			<!--
-				force animation over transition in css, 
-				can solve mixing jump issues though it 
-				didn't work for me here. hmmmm.
-				-->
-			<transition name="slide" type="animation">
-				<div class="alert alert-info" v-if="show">
-					Slide animation element
-				</div>
-			</transition>
-
-			<!--
-				appear animates the element when it gets
-				loaded onto the page first time
-				-->
-			<transition name="fade" appear>
-				<div class="alert alert-info" v-if="show">
-					Fade Appear animation, transition on this 
-					element when the page first loads
-				</div>
-			</transition>
-
-			<!-- animate.css custom animation/transitions
-				remember to include cdn link in the html file
-				or try importing it into App.vue (?)
-
-				Include attr for every class you want to set, 
-				but don't include anything that's blank, i.e.: 
-				really don't need enter-class initial setting below,
-				so don't put it in there
+				mode="out-in" : transition mode. "out-in" means let the old 
+				element animate out first, then animate the new element in.
 			-->
-			<transition 
-				appear
-				enter-active-class="animated bounce"
-				leave-class=""
-				leave-active-class="animated shake"
-				>
-				<div class="alert alert-info" v-if="show">
-					Animate.CSS Custom Animation. See props on the 
-					<strong>transition</strong> wrapper that apply 
-					the custom classes.
-				</div>
+			<transition :name="alertAnimation" mode="out-in">
+				<div class="alert alert-info" v-if="show" key="info">Info Information goes here...</div>
+				<div class="alert alert-warning" v-else key="warning">Warning Information goes here...</div>
 			</transition>
-
-
-			<hr>
-
-
-			<select v-model="alertAnimation" class="form-control mb-3">
-				<option value="fade">Fade</option>
-				<option value="slide">Slide</option>
-			</select>
-
-			<!--
-				dynamic class assignment from select above 
-			-->
-			<transition :name="alertAnimation">
-				<div class="alert alert-info" v-if="show">
-					Dynamically setting the class from the select field above.
-				</div>
-			</transition>
-
-
-			<div class="alert alert-warning mt-5">
-				<h4>TO DO...</h4>
-				<p>Look up &lt;transition type=""&gt; to figure out how to 
-					use it, it didn't really work in context of the class as 
-					he described it.</p>
-			</div>
 
 		</content-area>
 	</div>
@@ -113,7 +46,6 @@
 		this sets up the intial appearance of the object(s)
 	*/
 	.fade-enter {
-		position: relative;
 		opacity: 0;
 	}
 	
@@ -121,23 +53,17 @@
 		should ONLY be the transition selector
 	*/
 	.fade-enter-active {
-		transition: all 1.0s;
+		transition: all 0.3s;
 	}
 
 	/* initial state before transition out */
-	.fade-leave {
-		/*	Doesn't really need to be set, opacity 1
-			is the default
-		*/
-		/* opacity: 1; */
-		position: relative;
-	}
+	.fade-leave {}
 	
 	/*	Here the final state is necessary, so
 		include opacity: 0
 	*/
 	.fade-leave-active {
-		transition: opacity 1.0s;
+		transition: opacity 0.3s;
 		opacity: 0;
 	}
 
