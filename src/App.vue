@@ -1,8 +1,9 @@
 <template>
 	<div>
-		<course-header num="14" name="Animation: Transitions" sep="&gt;"></course-header>
+		<!--
+		<course-header num="14" name="Animation: Transition Event Hooks for JS" sep="&gt;"></course-header>
+		-->
 		<content-area>
-			<h2>Animations</h2>
 
 			<hr>
 
@@ -20,6 +21,38 @@
 				<div class="alert alert-warning" v-else key="warning">Warning Information goes here...</div>
 			</transition>
 
+			<hr>
+
+			<button class="btn btn-primary" @click="load=!load">Load / Remove Element</button>
+
+			<br class="my-3">
+
+			<!--
+				|
+				| Binding hooks to method for all possible hooks
+				| 
+				| note the :css="false" binding, this implicitly tells
+				| Vue not to interpret transitions with css
+				|
+			-->
+			<transition 
+			 @before-enter="beforeEnter"
+			 @enter="enter"
+			 @after-enter="afterEnter"
+			 @enter-cancelled="enterCancelled"
+			 @before-leave="beforeLeave"
+			 @leave="leave"
+			 @after-leave="afterLeave"
+			 @leave-cancelled="leaveCancelled"
+			 :css="false"
+			>
+				<div style="width: 300px; height: 100px; background-color: lightgreen" v-if="load"></div>
+			</transition>
+
+			<hr>
+
+			
+
 		</content-area>
 	</div>
 </template>
@@ -34,14 +67,67 @@
 		},
 		data() {
 			return {
-				show: true,
-				alertAnimation: 'fade'
+				show: false,
+				load: true,
+				alertAnimation: 'fade',
+				elementWidth: 100
 			}
+		},
+		methods: {
+			beforeEnter(el) {
+				console.log('beforeEnter');
+				this.elementWidth = 100;
+				el.style.width = this.elementWidth + 'px';
+			},
+			enter(el, done) {
+				console.log('enter');
+				let round = 1;
+				const interval = setInterval( () => {
+					el.style.width = (this.elementWidth + round * 10)+'px';
+					round++;
+					if(round>20) {
+						clearInterval(interval);
+						done();
+					}
+				}, 20);
+				done(); // tells Vue when the animation is done, used only for javascript animations
+			},
+			afterEnter(el) {
+				console.log('afterEnter');
+			},
+			enterCancelled(el) {
+				console.log('enterCancelled');
+			},
+			beforeLeave(el) {
+				console.log('beforeLeave');
+				this.elementWidth = 300;
+				el.style.width = this.elementWidth + 'px';
+			},
+			leave(el, done) {
+				console.log('leave');
+				let round = 1;
+				const interval = setInterval( () => {
+					el.style.width = (this.elementWidth - round * 10)+'px';
+					round++;
+					if(round>20) {
+						clearInterval(interval);
+						done();
+					}
+				}, 20);
+			},
+			afterLeave(el) {
+				console.log('afterLeave');
+			},
+			leaveCancelled(el) {
+				console.log('leaveCancelled');
+			}
+
 		}
 	}
 </script>
 
 <style>
+
 	/*	Only 1 frame at beginning of animation,
 		this sets up the intial appearance of the object(s)
 	*/
@@ -53,7 +139,7 @@
 		should ONLY be the transition selector
 	*/
 	.fade-enter-active {
-		transition: all 0.3s;
+		transition: opacity 1s;
 	}
 
 	/* initial state before transition out */
@@ -63,7 +149,7 @@
 		include opacity: 0
 	*/
 	.fade-leave-active {
-		transition: opacity 0.3s;
+		transition: opacity 1s;
 		opacity: 0;
 	}
 
