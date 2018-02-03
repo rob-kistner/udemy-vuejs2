@@ -1,75 +1,107 @@
 <template>
 	<div class="container">
-		<div class="row justify-content-center my-5">
-			<div class="col-sm-8 col-md-6">
-
-				<h1 class="text-center">The Super Quiz</h1>
-
-			</div>
-		</div>
-
 		<div class="row justify-content-center">
-			<div class="col-sm-8 col-md-6">
-			
-				<transition name="flip" mode="out-in">
-					<component 
-						:is="mode" 
-						@answered="answered($event)" 
-						@confirmed="mode = 'app-question'">
-					</component>
-				</transition>
-
+			<div class="col-sm-10 col-md-8">
+				<h2 class="my-5">Http with vue-resource</h2>
+				<div class="form-group">
+					<label for="">Username</label>
+					<input type="text" class="form-control" v-model="user.username">
+				</div>
+				<div class="form-group">
+					<label for="">Mail Address</label>
+					<input type="text" class="form-control" v-model="user.email">
+				</div>
+				<button class="btn btn-primary" @click="submit">Submit</button>
+				<hr>
+				<button class="btn btn-primary" @click="fetchData">Get Data</button>
+				<ul class="list-group">
+					<li 
+						class="list-group-item" 
+						v-for="u in users">
+						<h5>{{u.username}}</h5>
+						<p class="mb-0">{{u.email}}</p>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import Question from './components/Question.vue';
-	import Answer from './components/Answer.vue';
-
 	export default {
 		data() {
 			return {
-				mode: 'app-question'
+				user: {
+					username: '',
+					email: ''
+				},
+				users: []
 			}
 		},
-		methods: {
-		  answered(isCorrect) {
-			  if (isCorrect) {
-				  this.mode = 'app-answer';
-			  } else {
-				  this.mode = 'app-question';
-				  alert('Wrong, try again!');
-			  }
-		  }
+		mounted() {
+			this.fetchData();
 		},
-		components: {
-			appQuestion: Question,
-			appAnswer: Answer
+		methods: {
+			submit() {
+			/* ----------------------------------------
+			| NOTE:
+			| $http becomes available when we
+			| Vue.use the vue-resource package
+			| ----------------------------------------
+			| the post params are...
+			|
+			| 1: @string
+			|	url to the firebase database including the top 
+			|	node, note the .json is necessary at the end
+			|	of that top node name
+			|
+			| 2: @object
+			|	post data to send to the database, in this case,
+			|	the user object
+			| ----------------------------------------
+			| A promise is then set up to get the response
+			| from the server and log it to console
+			---------------------------------------- */
+				this.$http.post('https://vuejs-http-582b9.firebaseio.com/data.json', this.user)
+					.then(response => {
+						console.log(response);
+					}, error => {
+						console.log(error);
+					});
+			},
+			fetchData() {
+			/* -----------------------------------------
+			| The get method returns a promise. You need to 
+			| return the response.json() object (which is a promise)
+			| to another chained promise to which you pass the data
+			| for use
+			------------------------------------------*/
+				this.$http.get('https://vuejs-http-582b9.firebaseio.com/data.json')
+					.then(response => {
+						return response.json();
+					})
+					.then(data => {
+						// parse into component array
+						const resultArray = [];
+						for(let key in data) {
+							resultArray.push(data[key]);
+						}
+						this.users = resultArray;
+					});
+			}
 		}
 	}
 </script>
 
 <style>
-	.flip-enter {
-		transform: rotateY(0deg); /* not necessary, this is the default */
+
+	.btn {
+		display: block;
+		margin: 2rem 0;
 	}
-	.flip-enter-active {
-		animation: flip-in 0.25s ease-out forwards;
+	hr {
+		margin: 1.5rem 0;
+		border: 1px dashed #ccc;
 	}
-	.flip-leave {
-		transform: rotateY(0deg); /* not necessary, this is the default */
-	}
-	.flip-leave-active {
-		animation: flip-out 0.25s ease-out forwards;
-	}
-	@keyframes flip-out {
-		from { transform: rotateY(0deg);  }
-		to   { transform: rotateY(90deg); }
-	}
-	@keyframes flip-in {
-		from { transform: rotateY(90deg); }
-		to   { transform: rotateY(0deg);  }
-	}
+
 </style>
