@@ -13,8 +13,13 @@
 				</div>
 				<button class="btn btn-primary" @click="submit">Submit</button>
 				<hr>
-				<button class="btn btn-primary" @click="fetchData">Get Data</button>
-				<ul class="list-group">
+				<!-- <input type="text" class="form-control" v-model="node"> -->
+				<select class="form-control" v-model="node" @change="fetchData">
+					<option value="" selected="selected">choose one...</option>
+					<option value="alternative">alternative</option>
+					<option value="data">data</option>
+				</select>
+				<ul class="list-group mt-3">
 					<li 
 						class="list-group-item" 
 						v-for="u in users">
@@ -22,6 +27,14 @@
 						<p class="mb-0">{{u.email}}</p>
 					</li>
 				</ul>
+				<hr>
+				<div class="alert alert-warning">
+					<h4>TO DO...</h4>
+					<p>Not sure I'm fully understanding the custom resource part 
+						of this section, may need to look into that further to 
+						master it.
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -36,7 +49,8 @@
 					email: ''
 				},
 				users: [],
-				resource: {}
+				resource: {},
+				node: 'data'
 			}
 		},
 		methods: {
@@ -45,24 +59,39 @@
 				this.resource.saveAlt(this.user);
 			},
 			fetchData() {
-				this.$http.get('data.json')
+				// this.$http.get()
+				// 	.then(response => {
+				// 		return response.json();
+				// 	})
+				// 	.then(data => {
+				// 		const resultArray = [];
+				// 		for(let key in data) {
+				// 			resultArray.push(data[key]);
+				// 		}
+				// 		this.users = resultArray;
+				// 	});
+
+				// see https://medialize.github.io/URI.js/uri-template.html
+				// for reference on uri template strings
+				this.resource.getData({node: this.node})
 					.then(response => {
-						return response.json();
-					})
-					.then(data => {
-						const resultArray = [];
-						for(let key in data) {
-							resultArray.push(data[key]);
-						}
-						this.users = resultArray;
-					});
+					return response.json();
+				})
+				.then(data => {
+					const resultArray = [];
+					for(let key in data) {
+						resultArray.push(data[key]);
+					}
+					this.users = resultArray;
+				});
 			}
 		},
 		created() {
 			const customActions = {
-				saveAlt: {method: 'POST', url: 'alternative.json'}
+				saveAlt: {method: 'POST', url: 'alternative.json'},
+				getData: {method: 'GET'}
 			}
-			this.resource = this.$resource('data.json', {}, customActions)
+			this.resource = this.$resource('{node}.json', {}, customActions)
 		}
 	}
 </script>
