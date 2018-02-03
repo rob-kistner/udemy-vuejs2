@@ -41,28 +41,15 @@
 		mounted() {
 			this.fetchData();
 		},
+		/* -----------------------------------------
+		| Note how we just send empty strings below 
+		| instead of the url to the firebase data.
+		| This is due to the global setting in main.js
+		| of Vue.http.options.root
+		------------------------------------------*/
 		methods: {
 			submit() {
-			/* ----------------------------------------
-			| NOTE:
-			| $http becomes available when we
-			| Vue.use the vue-resource package
-			| ----------------------------------------
-			| the post params are...
-			|
-			| 1: @string
-			|	url to the firebase database including the top 
-			|	node, note the .json is necessary at the end
-			|	of that top node name
-			|
-			| 2: @object
-			|	post data to send to the database, in this case,
-			|	the user object
-			| ----------------------------------------
-			| A promise is then set up to get the response
-			| from the server and log it to console
-			---------------------------------------- */
-				this.$http.post('https://vuejs-http-582b9.firebaseio.com/data.json', this.user)
+				this.$http.post('', this.user)
 					.then(response => {
 						console.log(response);
 					}, error => {
@@ -70,13 +57,7 @@
 					});
 			},
 			fetchData() {
-			/* -----------------------------------------
-			| The get method returns a promise. You need to 
-			| return the response.json() object (which is a promise)
-			| to another chained promise to which you pass the data
-			| for use
-			------------------------------------------*/
-				this.$http.get('https://vuejs-http-582b9.firebaseio.com/data.json')
+				this.$http.get('')
 					.then(response => {
 						return response.json();
 					})
