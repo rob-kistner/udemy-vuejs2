@@ -17,13 +17,21 @@ Vue.http.options.root = "https://vuejs-http-582b9.firebaseio.com/data.json";
 	into a PUT request which overwrites everything
 	(yikes) and writes the two fields directly to 
 	the root without an index
+
+	the next() method allows the request to continue 
+	which is necessary to keep the app going
 ------------------------------------------*/
 Vue.http.interceptors.push((request, next) => {
 	console.log(request);
 	if(request.method == 'POST') {
 		request.method = 'PUT';
 	}
-	next();
+		// this allows the looping function in fetchData() to
+		// work again by resetting response.json to the response
+		// body
+	next(response => {
+		response.json = () => { return { messages: response.body } }
+	});
 });
 
 
