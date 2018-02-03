@@ -40,34 +40,9 @@
 			}
 		},
 		methods: {
-			/* -----------------------------------------
-				setting the url base in main.js under
-				Vue.http.options.root and passing the 
-				data.json database with help of the 
-				created hook below
-
-				see the documentation for vue-resource on 
-				this and to see the default actions at:
-
-				https://github.com/pagekit/vue-resource/blob/develop/docs/resource.md
-
-			------------------------------------------*/
 			submit() {
-
-					// replacing this longer method
-					// with a vue-resource built-in
-					// resource setup version
-
-				// this.$http.post('data.json', this.user)
-				// 	.then(response => {
-				// 		console.log(response);
-				// 	}, error => {
-				// 		console.log(error);
-				// 	});
-
-					// shorter syntax version using the
-					// resource setup
-				this.resource.save({}, this.user);
+				// this.resource.save({}, this.user);
+				this.resource.saveAlt(this.user);
 			},
 			fetchData() {
 				this.$http.get('data.json')
@@ -84,9 +59,10 @@
 			}
 		},
 		created() {
-			// database suffix to root url, to be used in
-			// the above methods as this.resource
-			this.resource = this.$resource('data.json')
+			const customActions = {
+				saveAlt: {method: 'POST', url: 'alternative.json'}
+			}
+			this.resource = this.$resource('data.json', {}, customActions)
 		}
 	}
 </script>
