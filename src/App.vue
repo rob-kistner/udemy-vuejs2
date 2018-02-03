@@ -35,34 +35,46 @@
 					username: '',
 					email: ''
 				},
-				users: []
+				users: [],
+				resource: {}
 			}
 		},
-		mounted() {
-			this.fetchData();
-		},
-		/* -----------------------------------------
-		| Note how we just send empty strings below 
-		| instead of the url to the firebase data.
-		| This is due to the global setting in main.js
-		| of Vue.http.options.root
-		------------------------------------------*/
 		methods: {
+			/* -----------------------------------------
+				setting the url base in main.js under
+				Vue.http.options.root and passing the 
+				data.json database with help of the 
+				created hook below
+
+				see the documentation for vue-resource on 
+				this and to see the default actions at:
+
+				https://github.com/pagekit/vue-resource/blob/develop/docs/resource.md
+
+			------------------------------------------*/
 			submit() {
-				this.$http.post('', this.user)
-					.then(response => {
-						console.log(response);
-					}, error => {
-						console.log(error);
-					});
+
+					// replacing this longer method
+					// with a vue-resource built-in
+					// resource setup version
+
+				// this.$http.post('data.json', this.user)
+				// 	.then(response => {
+				// 		console.log(response);
+				// 	}, error => {
+				// 		console.log(error);
+				// 	});
+
+					// shorter syntax version using the
+					// resource setup
+				this.resource.save({}, this.user);
 			},
 			fetchData() {
-				this.$http.get('')
+				this.$http.get('data.json')
 					.then(response => {
 						return response.json();
 					})
 					.then(data => {
-						// parse into component array
 						const resultArray = [];
 						for(let key in data) {
 							resultArray.push(data[key]);
@@ -70,6 +82,11 @@
 						this.users = resultArray;
 					});
 			}
+		},
+		created() {
+			// database suffix to root url, to be used in
+			// the above methods as this.resource
+			this.resource = this.$resource('data.json')
 		}
 	}
 </script>
