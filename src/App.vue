@@ -5,11 +5,6 @@
 				<h1>Routing</h1>
 				<hr>
 				<app-header />
-
-				<!--
-					built-in component telling it where 
-					to load the route
-				-->
 				<router-view />
 			</div>
 		</div>
