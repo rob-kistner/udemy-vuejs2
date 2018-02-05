@@ -8,3 +8,15 @@
 		</ul>
 	</div>
 </template>
+
+
+<style scoped>
+	.list-group > .list-group-item {
+		transition: all 0.25s;
+	}
+	.list-group > .list-group-item:hover {
+		background-color: var(--primary);
+		color: #fff;
+		transition: all 0.25s;
+	}
+</style>

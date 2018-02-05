@@ -24,13 +24,9 @@ export const routes = [
 	{
 		path: "/user",
 		props: true,
-			//
-			// header-bottom router-view on that 
-			// component allows it to appear at the bottom
-			//
 		components: {
 			default: User,
-			'header-bottom': Header
+			'header-top': Header
 		},
 		children: [
 			{ path: "", component: UserStart }, 
@@ -44,5 +40,22 @@ export const routes = [
 			default: Notes,
 			'header-top': Header
 		}
+	},
+	/* -----------------------------------------
+		simple redirect for /redirect-me,
+		goes to the /user uri
+	------------------------------------------*/
+	{
+		path: '/redirect-me',
+		redirect: '/user'
+	},
+	/* -----------------------------------------
+		catch-all is the path: '*',
+		sending anything not covered in this 
+		routes file to a single location
+	------------------------------------------*/
+	{
+		path: '*',
+		redirect: '/'
 	}
 ];
