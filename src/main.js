@@ -1,25 +1,22 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router';
 import App from './App.vue'
-import VueResource from 'vue-resource';
 
+// the actual routes are in this external file
+import { routes } from './routes.js';
 
-Vue.use(VueResource);
+// use the vue-router package
+Vue.use(VueRouter);
 
-Vue.http.options.root = "https://vuejs-http-582b9.firebaseio.com/";
-
-Vue.http.interceptors.push((request, next) => {
-	console.log(request);
-	if(request.method == 'POST') {
-		request.method = 'PUT';
-	}
-	next(response => {
-		response.json = () => { return { messages: response.body } }
-	});
+// instantiate the router
+const router = new VueRouter({
+	routes,
+	mode: 'history' // this is the no-hash-tag style, i.e.: localhost:8080/#/user
 });
-
 
 
 new Vue({
 	el: '#app',
-	render: h => h(App)
+	router: router, // pass router into Vue instance
+ 	render: h => h(App)
 })
