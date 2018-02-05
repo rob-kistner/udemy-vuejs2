@@ -3,21 +3,46 @@ import UserStart from './components/user/UserStart.vue';
 import UserDetail from './components/user/UserDetail.vue';
 import UserEdit from './components/user/UserEdit.vue';
 import Home from './components/Home.vue';
+import Header from './components/Header.vue';
 import Notes from './components/Notes.vue';
 
 
 export const routes = [
-	{ path: "", component: Home, name: 'home' }, 
-	{ path: "/user", component: User, props: true, children: [
+	{
+		path: "",
+		name: 'home',
+		components: {
+			default: Home,
+			//
+			// Named view-router directive:
+			// on the home components, the header-top
+			// area will have the navigation
+			//
+			'header-top': Header
+		}
+	},
+	{
+		path: "/user",
+		props: true,
+			//
+			// header-bottom router-view on that 
+			// component allows it to appear at the bottom
+			//
+		components: {
+			default: User,
+			'header-bottom': Header
+		},
+		children: [
 			{ path: "", component: UserStart }, 
 			{ path: ":id", component: UserDetail }, 
-				//
-				// this is the named route, can be used in
-				// the other components instead of assembling
-				// dynamic routes manually
-				//
 			{ path: ":id/edit", component: UserEdit, name: 'userEdit' }
 		]
 	},
-	{ path: "/notes", component: Notes }
+	{
+		path: "/notes",
+		components: {
+			default: Notes,
+			'header-top': Header
+		}
+	}
 ];

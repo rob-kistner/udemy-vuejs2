@@ -4,16 +4,19 @@
         <p>User ID: {{ $route.params.id }}</p>
         <!--
             |
-            | Below shows how to refer to a named route,
-            | this also allows us to more programmatically 
-            | get the passed parameters than assembling 
-            | a uri manually
+            | The query key/val below shows how to 
+            | pass query parameters along to the route 
+            | with multiple values
             |
         -->
         <router-link
             tag="button" 
             class="btn btn-primary" 
-            :to="{ name: 'userEdit', params: { id: $route.params.id } }">
+            :to="{
+                name: 'userEdit', 
+                params: { id: $route.params.id },
+                query: { locale: 'en', q: 100 }
+            }">
         Edit this user
         </router-link>
     </div>
