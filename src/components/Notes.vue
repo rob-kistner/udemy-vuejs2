@@ -13,5 +13,9 @@
 			<h4>Section 16-242: Hash Navigation</h4>
 			<p>Could not get this to work, following the directions exactly. Not sure why but may need to look it up.</p>
 		</div>
+		<div>
+			<h4>Section 16-247: Lazy Loading</h4>
+			<p>This didn't work at all compared to the video. Something to look up in the future.</p>
+		</div>
 	</div>
 </template>
