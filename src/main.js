@@ -2,21 +2,33 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import App from './App.vue'
 
-// the actual routes are in this external file
 import { routes } from './routes.js';
 
-// use the vue-router package
 Vue.use( VueRouter );
 
-// instantiate the router
 const router = new VueRouter({
 	routes,
-	mode: 'history' // this is the no-hash-tag style, i.e.: localhost:8080/#/user
+	mode: 'history',
+	//
+	// scrollBehavior is SUPPOSED to scroll down
+	// to a given hash or page position. I couldn't get it 
+	// to work on Chrome
+	//
+	scrollBehavior(to, from, savedPosition) {
+		// in case user just used the back button
+		if(savedPosition) {
+			return savedPosition;
+		}
+		if(to.hash) {
+			return { selector: to.hash };
+		}
+		return { x: 0, y: 300 };
+	}
 });
 
 
 new Vue({
 	el: '#app',
-	router: router, // pass router into Vue instance
+	router: router,
  	render: h => h(App)
 })
