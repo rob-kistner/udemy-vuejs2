@@ -9,13 +9,7 @@ Vue.use( VueRouter );
 const router = new VueRouter({
 	routes,
 	mode: 'history',
-	//
-	// scrollBehavior is SUPPOSED to scroll down
-	// to a given hash or page position. I couldn't get it 
-	// to work on Chrome
-	//
 	scrollBehavior(to, from, savedPosition) {
-		// in case user just used the back button
 		if(savedPosition) {
 			return savedPosition;
 		}
@@ -24,6 +18,15 @@ const router = new VueRouter({
 		}
 		return { x: 0, y: 300 };
 	}
+});
+
+
+/*----------------------------------------
+	guards for routing
+------------------------------------------*/
+router.beforeEach( (to, from, next) => {
+	console.log('global beforeEach');
+	next(); // necessary to continue
 });
 
 
