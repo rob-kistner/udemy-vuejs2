@@ -1,15 +1,19 @@
 <template>
     <div>
         <h3>Some User Details</h3>
-        <!--
-            | Parameters need to be extracted from the
-            | global $route object
-        -->
         <p>User ID: {{ $route.params.id }}</p>
+        <!--
+            |
+            | Below shows how to refer to a named route,
+            | this also allows us to more programmatically 
+            | get the passed parameters than assembling 
+            | a uri manually
+            |
+        -->
         <router-link
             tag="button" 
             class="btn btn-primary" 
-            :to="'/user/' + $route.params.id + '/edit'">
+            :to="{ name: 'userEdit', params: { id: $route.params.id } }">
         Edit this user
         </router-link>
     </div>

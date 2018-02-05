@@ -7,18 +7,16 @@ import Notes from './components/Notes.vue';
 
 
 export const routes = [
-	{ path: "", component: Home }, 
+	{ path: "", component: Home, name: 'home' }, 
 	{ path: "/user", component: User, props: true, children: [
-			/* -----------------------------------------
-			Starting subroutes with '/' will append 
-			the path directly after the domain
-
-			Without the '/', they get appended to the 
-			parent route, i.e.: after '/notes'
-			------------------------------------------*/
 			{ path: "", component: UserStart }, 
 			{ path: ":id", component: UserDetail }, 
-			{ path: ":id/edit", component: UserEdit }
+				//
+				// this is the named route, can be used in
+				// the other components instead of assembling
+				// dynamic routes manually
+				//
+			{ path: ":id/edit", component: UserEdit, name: 'userEdit' }
 		]
 	},
 	{ path: "/notes", component: Notes }
