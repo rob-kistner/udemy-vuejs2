@@ -11,18 +11,6 @@
 <script>
     import { mapActions } from 'vuex';
 
-    /* -----------------------------------------
-        using object notation instead of 
-        array here to rename the mapped async actions
-
-        NOTE:
-        mapActions in use here essentailly called dispatch as 
-        if you wrote the action like this...
-
-        increment() {
-            this.$store.dispatch('increment');
-        }
-    ------------------------------------------*/
     export default {
         methods: {
             ...mapActions({

@@ -8,6 +8,9 @@
                 <hr>
                 <app-counter></app-counter>
                 <app-another-counter></app-another-counter>
+                <hr>
+                <input type="text" v-model="value">
+                <p>{{ value }}</p>
             </div>
         </div>
     </div>
@@ -25,6 +28,25 @@
             appAnotherCounter: AnotherCounter,
             appResult: Result,
             appAnotherResult: AnotherResult,
+        },
+        computed: {
+                ///////////////////////////////////////////////
+                //
+                // computed can do get and set at the same time
+                // with the below configuration. This will use:
+                //
+                // get() to return the "value" value and 
+                // set() to dispatch the new mutation through
+                //       the action
+                //
+            value: {
+                get() {
+                    return this.$store.getters.value;
+                },
+                set(value) {
+                    this.$store.dispatch('updateValue', value);
+                }
+            }
         }
     }
 </script>
