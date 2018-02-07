@@ -1,20 +1,34 @@
 <template>
     <div>
         <h5>Another Counter (VueX driven)</h5>
-        <button class="btn btn-primary" @click="increment">+</button>
-        <button class="btn btn-primary" @click="decrement">-</button>
+        <p>This one is asynchronous thanks to passing the mutations through actions.</p>
+        <p>The object passed in the click attr on these buttons passes an object to the actions allowing for async properties to be set.</p>
+        <button class="btn btn-primary" @click="aInc({by: 50, dur:250})">+</button>
+        <button class="btn btn-primary" @click="aDec({by: 50, dur:500})">-</button>
     </div>
 </template>
 
 <script>
-    import { mapMutations } from 'vuex';
+    import { mapActions } from 'vuex';
 
+    /* -----------------------------------------
+        using object notation instead of 
+        array here to rename the mapped async actions
+
+        NOTE:
+        mapActions in use here essentailly called dispatch as 
+        if you wrote the action like this...
+
+        increment() {
+            this.$store.dispatch('increment');
+        }
+    ------------------------------------------*/
     export default {
         methods: {
-            ...mapMutations([
-                'increment',
-                'decrement'
-            ])
+            ...mapActions({
+                aInc: 'asyncIncrement',
+                aDec: 'asyncDecrement'
+            })
         }
     }
 </script>
