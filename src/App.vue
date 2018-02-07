@@ -30,15 +30,14 @@
             appAnotherResult: AnotherResult,
         },
         computed: {
-                ///////////////////////////////////////////////
-                //
-                // computed can do get and set at the same time
-                // with the below configuration. This will use:
-                //
-                // get() to return the "value" value and 
-                // set() to dispatch the new mutation through
-                //       the action
-                //
+                /*-------------------------------------------
+                 Computed can do get and set at the same time
+                 with the below configuration. This will use:
+                
+                 get() to return the "value" value and 
+                 set() to dispatch the new mutation through
+                       the action
+                ------------------------------------------*/
             value: {
                 get() {
                     return this.$store.getters.value;

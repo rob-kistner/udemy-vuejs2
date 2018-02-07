@@ -1,68 +1,34 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
+
+    // module imports, named
+import counter from './modules/counter';
+
+import * as actions from './actions';
+import * as mutations from './mutations';
+import * as getters from './getters';
 
 Vue.use(Vuex);
 
 /* -----------------------------------------
-  Here, we're adding a new state "value" for 
-  v-model use within VueX
+    Here, we're adding a new state "value" for 
+    v-model use within VueX
 ------------------------------------------*/
 
 export const store = new Vuex.Store({
-         state: {
-           counter: 0,
-           clicks: 0,
-            // new state called "value"
-           value: 0
-         },
-         getters: {
-           clicks: state => state.clicks,
-           counter: state => state.counter,
-           doubleCounter: state => state.counter * 2,
-           stringCounter: state => state.clicks + " clicks",
-            // getter for value
-           value: state => {
-             return state.value;
-           }
-         },
-         mutations: {
-           increment: (state, payload) => {
-             state.counter += payload;
-             state.clicks++;
-           },
-           decrement: (state, payload) => {
-             if (state.counter > 0) {
-               state.counter -= payload;
-               state.clicks++;
-             } else {
-               state.counter = 0;
-             }
-           },
-            // value mutation
-           updateValue: (state, payload) => {
-             state.value = payload;
-           }
-         },
-         actions: {
-           increment: ({ commit }, payload) => {
-             commit("increment", payload);
-           },
-           decrement: ({ commit }, payload) => {
-             commit("decrement", payload);
-           },
-           asyncIncrement: ({ commit }, payload) => {
-             setTimeout(() => {
-               commit("increment", payload.by);
-             }, payload.dur);
-           },
-           asyncDecrement: ({ commit }, payload) => {
-             setTimeout(() => {
-               commit("decrement", payload.by);
-             }, payload.dur);
-           },
-            // value action
-           updateValue({commit}, payload) {
-             commit('updateValue', payload);
-           }
-         }
-       });
+    state: {
+        clicks: 0,
+        value: 0
+    },
+    /* -----------------------------------------
+        New addition naming the modules to import
+        plus externalized getters, mutations and actions
+    ------------------------------------------*/
+    getters,
+    mutations,
+    actions,
+    modules: {
+        counter
+    }
+});
+
