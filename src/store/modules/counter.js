@@ -1,3 +1,5 @@
+import * as types from '../types';
+
 /* -----------------------------------------
     VUEX MODULE
     state, getters, mutations
@@ -7,14 +9,15 @@
     back into store.js 
 ------------------------------------------*/
 const state = {
-    counter: 0
+    counter: 0,
+    clicks: 0
 };
 
 const getters = {
-    clicks: state => state.clicks,
-    counter: state => state.counter,
-    doubleCounter: state => state.counter * 2,
-    stringCounter: state => state.clicks + " clicks",
+    [types.CLICK_COUNTER]: state => state.clicks,
+    [types.STRING_COUNTER]: state => state.clicks + " clicks",
+    [types.COUNTER]: state => state.counter,
+    [types.DOUBLE_COUNTER]: state => state.counter * 2
 };
 
 const mutations = {
@@ -51,13 +54,6 @@ const actions = {
     }
 }
 
-/* -----------------------------------------
-    Note: since key shortcut, 
-    Vue will expand these to (example): 
-        state: state, 
-        mutations: mutations,
-    etc.
-------------------------------------------*/
 export default {
     state,
     mutations,
