@@ -1,14 +1,18 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import App from './App.vue';
+import { routes } from './routes';
 
-// exported store object from the store.js file
-//
-import { store } from './store/store';
+Vue.use(VueRouter);
+
+
+const router = new VueRouter({
+    mode: 'history',
+    routes
+});
 
 new Vue({
-  el: '#app',
-  // this can also be written as just "store,"
-  // Vue will imply
-  store: store,
-  render: h => h(App)
+    el: '#app',
+    router,
+    render: h => h(App)
 })

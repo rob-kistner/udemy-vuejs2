@@ -1,13 +1,15 @@
 <template>
-    <div class="container">
-        <router-view></router-view>
+    <div>
+        <h1>My Stock</h1>
     </div>
 </template>
 
 <script>
+
     export default {
 
     }
+
 </script>
 
 <style>
