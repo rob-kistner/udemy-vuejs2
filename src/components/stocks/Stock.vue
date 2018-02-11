@@ -11,7 +11,7 @@
                         type="number" 
                         placeholder="Quantity"
                         v-model="quantity"
-                        @change="checkQuantity" />
+                    />
                     <button
                         class="btn btn-success mt-3"
                         @click="buyStock"
@@ -51,9 +51,6 @@
                 };
                 console.log(order);
                 this.quantity = 0;
-            },
-            checkQuantity() {
-                console.log('change fired');
             }
         }
     }
