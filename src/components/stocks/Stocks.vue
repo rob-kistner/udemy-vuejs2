@@ -1,14 +1,8 @@
-<template>
-    <div>
-        <h1>Stocks</h1>
-        <div class="row">
-            <app-stock 
-                v-for="stock in stocks" 
-                :stock="stock"
-                :key="stock.id">
-            </app-stock>
-        </div>
-    </div>
+<template lang="pug">
+    div
+        h1 Stocks
+        .row
+            app-stock(v-for="stock in stocks", :stock="stock", :key="stock.id")
 </template>
 
 <script>

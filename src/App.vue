@@ -1,12 +1,9 @@
-<template>
-    <div class="container">
-        <app-header></app-header>
-        <section  id="content-main" class="row justify-content-center">
-            <div>
-                <router-view></router-view>
-            </div>
-        </section>
-    </div>
+<template lang="pug">
+    .container
+        app-header
+        section#content-main
+            div
+                router-view
 </template>
 
 <script>

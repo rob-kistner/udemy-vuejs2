@@ -1,46 +1,34 @@
-<template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<template lang="pug">
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
 
-        <router-link tag="a" class="navbar-brand" to="/">
-            <h4>
-                Stock Trader
-            </h4>
-        </router-link>
+        router-link.navbar-brand(tag="a" to="/")
+            h4 Stock Trader
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <router-link class="nav-item" activeClass="active" tag="li" to="/stocks">
-                    <a class="nav-link">Stocks</a>
-                </router-link>
-                <router-link class="nav-item" activeClass="active" tag="li" to="/portfolio">
-                    <a class="nav-link">Portfolio</a>
-                </router-link>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#">End Day</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class        = "nav-link" 
-                       href         = "#" 
-                       id          = "navbarDropdown" 
-                       data-toggle = "dropdown">
-                    Save &amp; Load
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="" href="#">Load Data</a>
-                        <a class="" href="#">Save Data</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        #navbarSupportedContent.collapse.navbar-collapse
+            ul.navbar-nav.mr-auto
+                router-link.nav-item(activeClass="active", tag="li", to="/stocks")
+                    a.nav-link Stocks
+                router-link.nav-item(activeClass="active", tag="li", to="/portfolio")
+                    a.nav-link Portfolio
+            ul.navbar-nav.ml-auto
+                li.nav-item.dropdown
+                    a.nav-link(href="#") End Day
+                li.nav-item.dropdown
+                    a#navbarDropdown.nav-link(href="#", data-toggle="dropdown") Save &amp; Load
+                    .dropdown-menu
+                        a(href="#") Load Data
+                        a(href="#") Save Data
+            p.navbar-text.my-2.ml-4 Funds: #[strong ${{ funds }}]
 </template>
 
 <script>
 
     export default {
-
+        computed: {
+            funds() {
+                return this.$store.getters.funds;
+            }
+        }
     }
 
 </script>

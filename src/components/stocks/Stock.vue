@@ -1,29 +1,16 @@
-<template>
-    <div class="col-sm-6 col-md-4 my-4">
-        <div class="card card-success">
-            <div class="card-header bg-success text-white">
-                <h4>{{ stock.name }}</h4>
-                <small>Price: {{ stock.price }}</small>
-            </div>
-            <div class="card-body">
-                <div class="card-text">
-                    <input class="form-control"
-                        type="number" 
-                        placeholder="Quantity"
-                        v-model="quantity"
-                    />
-                    <button
-                        class="btn btn-success mt-3"
-                        @click="buyStock"
-                        :disabled="quantity <= 0 || !Number.isInteger(quantity)"
-                        >Buy</button>
-                    <small v-if="purchasePrice > 0" class="d-block mt-3">
-                        Purchase price <strong class="text-success">$ {{ purchasePrice }}</strong>
-                    </small>
-                </div>
-            </div>
-        </div>
-    </div>
+<template lang="pug">
+    .col-sm-6.col-md-4.my-4
+        .card.card-success
+            .card-header.bg-success.text-white
+                h4 {{ stock.name }}
+                small Price: {{ stock.price }}
+            .card-body
+                .card-text
+                    input.form-control(type="number", placeholder="Quantity", v-model.number="quantity", :class="{danger: insufficientFunds}")
+                    button.btn.btn-success.mt-3(@click="buyStock", :disabled="insufficientFunds || quantity<=0 || !Number.isInteger(quantity)")
+                        | {{ insufficientFunds ? 'Insufficient Funds' : 'Buy' }}
+                    small.d-block.mt-3(v-if="purchasePrice > 0")
+                        | Purchase price #[strong.text-success $ {{ purchasePrice }}]
 </template>
 
 <script>
@@ -40,6 +27,12 @@
         computed: {
             purchasePrice() {
                 return this.quantity * this.stock.price;
+            },
+            funds() {
+                return this.$store.getters.funds;
+            },
+            insufficientFunds() {
+                return this.quantity * this.stock.price > this.funds;
             }
         },
         methods: {
@@ -49,7 +42,7 @@
                     stockPrice: this.stock.price,
                     quantity: this.quantity
                 };
-                console.log(order);
+                this.$store.dispatch('buyStock', order);
                 this.quantity = 0;
             }
         }
@@ -57,6 +50,8 @@
 
 </script>
 
-<style>
-
+<style scoped>
+.danger {
+    border: 2px solid #f00 !important;
+}
 </style>

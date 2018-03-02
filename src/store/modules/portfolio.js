@@ -9,6 +9,12 @@ const mutations = {
         const record = state.stocks.find( element => {
             return element.id == stockId;
         });
+        /*-----------------------------------
+        | if the stock exists, add quantity,
+        | else add the new stock.
+        |
+        | Debit funds as needed
+        -----------------------------------*/
         if(record) {
             record.quantity += quantity;
         } else {
@@ -20,24 +26,30 @@ const mutations = {
         state.funds -= stockPrice * quantity;
     },
 
-    'SELL_STOCKS'(state, { stockId, quantity, stockPrice}) {
+    'SELL_STOCKS'(state, { stockId, quantity, stockPrice }) {
         const record = state.stocks.find( element => {
             return element.id == stockId;
         });
+        /*-----------------------------------
+        | If stock quantity is greater than
+        | the sell quantity, update it, otherwise
+        | remove it.
+        |
+        | Update funds either way. 
+        -----------------------------------*/
         if(record.quantity > quantity) {
             record.quantity -= quantity;
         } else {
-                // remove it
             state.stocks.splice(state.stocks.indexOf(record), 1);
         }
         state.funds += stockPrice * quantity;
     }
-    
+
 };
 
 const actions = {
     sellStock( {commit}, order ) {
-        commit('SELL_STOCK', order);
+        commit('SELL_STOCKS', order);
     }
 };
 
