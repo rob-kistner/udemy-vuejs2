@@ -3,14 +3,14 @@
         .card.card-success
             .card-header.bg-success.text-white
                 h4 {{ stock.name }}
-                small Price: {{ stock.price }}
+                small Price: {{ stock.price | currency }}
             .card-body
                 .card-text
                     input.form-control(type="number", placeholder="Quantity", v-model.number="quantity", :class="{danger: insufficientFunds}")
                     button.btn.btn-success.mt-3(@click="buyStock", :disabled="insufficientFunds || quantity<=0 || !Number.isInteger(quantity)")
                         | {{ insufficientFunds ? 'Insufficient Funds' : 'Buy' }}
                     small.d-block.mt-3(v-if="purchasePrice > 0")
-                        | Purchase price #[strong.text-success $ {{ purchasePrice }}]
+                        | Purchase price #[strong.text-success {{ purchasePrice | currency }}]
 </template>
 
 <script>

@@ -4,7 +4,7 @@
         h6 You may Save or View your data
         h6 Click on End Day to begin a new day
         hr
-        p Your Funds: #[strong {{ funds }}]
+        p Your Funds: #[strong {{ funds | currency }}]
 </template>
 
 <script>

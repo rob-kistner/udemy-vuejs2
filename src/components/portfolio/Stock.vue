@@ -5,7 +5,7 @@
                 h4 {{ stock.name }}
             .card-body
                 .card-text
-                    small Price: {{ stock.price }} Quantity: {{ stock.quantity }}
+                    small Price: {{ stock.price | currency }} Quantity: {{ stock.quantity }}
                     input.form-control(type="number", placeholder="Quantity", v-model.number="quantity", :class="{danger: insufficientQuantity}")
                     button.btn.btn-info.mt-3(@click="sellStock", :disabled="insufficientQuantity || quantity<=0 || !Number.isInteger(quantity)")
                         | {{ insufficientQuantity ? "Not enough stocks" : "Sell" }}
