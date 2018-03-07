@@ -16,8 +16,8 @@
                 li.nav-item.dropdown(@click="toggleDropdown")
                     a#navbarDropdown.nav-link(href="#", data-toggle="dropdown") Save &amp; Load
                     .dropdown-menu(:class="{show: isDropdownOpen}")
-                        a.dropdown-item(href="#") Load Data
-                        a.dropdown-item(href="#") Save Data
+                        a.dropdown-item(href="#", @click="loadData") Load Data
+                        a.dropdown-item(href="#", @click="saveData") Save Data
             p.navbar-text.my-2.ml-4 Funds: #[strong {{ funds | currency }}]
 </template>
 
@@ -36,14 +36,26 @@
             }
         },
         methods: {
-            ...mapActions([
-                'randomizeStocks'
-            ]),
+            ...mapActions({
+                randomizeStocks: 'randomizeStocks',
+                fetchData: 'loadData'
+            }),
             toggleDropdown() {
                 this.isDropdownOpen = !this.isDropdownOpen;
             },
             endDay() {
                 this.randomizeStocks();
+            },
+            saveData() {
+                const data = {
+                    funds: this.$store.getters.funds,
+                    stockPortfolio: this.$store.getters.stockPortfolio,
+                    stocks: this.$store.getters.stocks
+                }
+                this.$http.put('data.json', data);
+            },
+            loadData() {
+                this.fetchData();
             }
         }
     }
