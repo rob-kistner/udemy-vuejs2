@@ -1,6 +1,10 @@
-# vue-cli
+# Udemy
+### Learning VueJS 2
 
-> A Vue.js project
+Finished course 3/7/18 at EOD.
+
+Still need to go through the bonus vids.
+
 
 ## Build Setup
 
