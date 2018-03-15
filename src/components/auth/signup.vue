@@ -69,9 +69,6 @@
 </template>
 
 <script>
-  // use custom axios instance
-  // in the axios-auth.js file
-  import axios from '../../axios-auth';
 
   export default {
     data () {
@@ -107,20 +104,7 @@
           terms: this.terms
         }
         console.log(formData)
-
-        /*-----------------------------------
-        / Authorizing in Firebase
-        /
-        / Firebase expects to get back the object passed
-        / below to return a valid user and token
-        -----------------------------------*/
-        axios.post('/signupNewUser?key=AIzaSyBeZWMlSLeK86lD_YKQyOlVwj6EQDGrTz4', {
-          email: formData.email,
-          password: formData.password,
-          returnSecureToken: true
-        })
-          .then(res => console.log(res))
-          .catch(error => console.log(error));
+        this.$store.dispatch('signUp', formData);
       }
     }
   }
