@@ -16,7 +16,7 @@ import store from './store'
   |  to restart the server
 -----------------------------------*/
 axios.defaults.baseURL = 'https://vuejs-http-582b9.firebaseio.com';
-axios.defaults.headers.common['Authorization'] = 'asdf';
+// axios.defaults.headers.common['Authorization'] = 'asdf';
 axios.defaults.headers.get['Accepts'] = 'application/json';
 
 /*-----------------------------------

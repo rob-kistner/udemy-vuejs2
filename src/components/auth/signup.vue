@@ -109,16 +109,16 @@
         console.log(formData)
 
         /*-----------------------------------
-        / Write to Firebase using Axios
+        / Authorizing in Firebase
         /
-        / Firebase requires .json to create the note if it doesn't
-        / exist. Actually, even if it does exist :)
-        /
-        / NOTE: there's a global config setting on main.js for
-        / the firebase url, which is why we can just target users.json
-        / here.
+        / Firebase expects to get back the object passed
+        / below to return a valid user and token
         -----------------------------------*/
-        axios.post('/users.json', formData)
+        axios.post('/signupNewUser?key=AIzaSyBeZWMlSLeK86lD_YKQyOlVwj6EQDGrTz4', {
+          email: formData.email,
+          password: formData.password,
+          returnSecureToken: true
+        })
           .then(res => console.log(res))
           .catch(error => console.log(error));
       }
