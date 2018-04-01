@@ -7,7 +7,9 @@
           <input
                   type="email"
                   id="email"
+                  @input="$v.email.$touch()"
                   v-model="email">
+          <div>{{ $v }}</div>
         </div>
         <div class="input">
           <label for="age">Your Age</label>
@@ -69,6 +71,8 @@
 </template>
 
 <script>
+  import { required, email } from 'vuelidate/lib/validators'
+
   export default {
     data () {
       return {
@@ -79,6 +83,29 @@
         country: 'usa',
         hobbyInputs: [],
         terms: false
+      }
+    },
+    /*----------------------------------------
+    Vuelidate validations, triggered with it's loaded
+    in main.js
+    ------------------------------------------*/
+    validations: {
+      email: {
+        /*----------------------------------------
+        These two validation methods imported
+        above, there's a full list of validations
+        on the vuelidate site.
+
+        These are also wired in above to the form 
+        field's @input event accessing Vuelidate's
+        $v keyword in the format:
+
+            $v.email.touch()
+        
+
+        ------------------------------------------*/
+        required: required,
+        email: email
       }
     },
     methods: {
