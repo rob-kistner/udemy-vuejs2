@@ -19,6 +19,17 @@
   </header>
 </template>
 
+<script>
+  export default {
+    computed: {
+      auth() {
+        return this.$store.getters.isAuthenticated()
+      }
+    }
+  }
+</script>
+
+
 <style scoped>
   #header {
     height: 56px;

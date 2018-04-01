@@ -12,75 +12,80 @@ export default new Vuex.Store({
     user: null
   },
   mutations: {
-    authUser( state, userData ) {
+    authUser (state, userData) {
       state.idToken = userData.token;
       state.userId = userData.userId;
     },
-    storeUser(state, user) {
-      state.user = user;
+    storeUser (state, user) {
+      state.user = user
     }
   },
   actions: {
-    signUp( {commit, dispatch}, authData ) {
-      axios.post('/signupNewUser?key=AIzaSyBeZWMlSLeK86lD_YKQyOlVwj6EQDGrTz4', {
+    signup ({commit, dispatch}, authData) {
+      axios.post('/signupNewUser?key=AIzaSyCXlVPPWknVGhfc60mt7Jkv0Xzrho7_mwc', {
         email: authData.email,
         password: authData.password,
         returnSecureToken: true
       })
         .then(res => {
-          console.log(res);
+          console.log(res)
           commit('authUser', {
             token: res.data.idToken,
             userId: res.data.localId
-          });
-          dispatch('storeUser', authData);
+          })
+          dispatch('storeUser', authData)
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(error))
     },
-    signIn( {commit}, authData ) {
-      axios.post('/verifyPassword?key=AIzaSyBeZWMlSLeK86lD_YKQyOlVwj6EQDGrTz4', {
+    login ({commit}, authData) {
+      axios.post('/verifyPassword?key=AIzaSyCXlVPPWknVGhfc60mt7Jkv0Xzrho7_mwc', {
         email: authData.email,
         password: authData.password,
         returnSecureToken: true
       })
         .then(res => {
-          console.log(res);
+          console.log(res)
           commit('authUser', {
             token: res.data.idToken,
             userId: res.data.localId
-          });
+          })
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(error))
     },
-    storeUser( {commit, state}, userData ) {
-      // firebase requires an auth query string
-      // for authentication containing the token
-      if( !state.idToken ) return;
+    storeUser ({commit, state}, userData) {
+      if (!state.idToken) {
+        return
+      }
       globalAxios.post('/users.json' + '?auth=' + state.idToken, userData)
         .then(res => console.log(res))
         .catch(error => console.log(error))
     },
-    fetchUser( {commit, state} ) {
-      if( !state.idToken ) return;
-      globalAxios.post('/users.json' + '?auth=' + state.idToken)
+    fetchUser ({commit, state}) {
+      if (!state.idToken) {
+        return
+      }
+      globalAxios.get('/users.json' + '?auth=' + state.idToken)
         .then(res => {
-          console.log(res);
-          const data = res.data;
-          const users = [];
-          for(let key in data) {
-            const user = data[key];
-            user.id = key;
-            users.push(user);
+          console.log(res)
+          const data = res.data
+          const users = []
+          for (let key in data) {
+            const user = data[key]
+            user.id = key
+            users.push(user)
           }
-          console.log(users);
+          console.log(users)
           commit('storeUser', users[0])
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(error))
     }
   },
   getters: {
-    user( state ) {
-      return state.user;
+    user (state) {
+      return state.user
+    },
+    isAuthenticated (state) {
+      return state.idToken !== null
     }
   }
 })

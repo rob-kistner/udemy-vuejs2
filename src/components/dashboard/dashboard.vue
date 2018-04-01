@@ -2,7 +2,7 @@
   <div id="dashboard">
     <h1>That's the dashboard!</h1>
     <p>You should only get here if you're authenticated!</p>
-    <p>First user's email: <strong>{{email}}</strong></p>
+    <p v-if="email">Your email address: {{ email }}</p>
   </div>
 </template>
 
@@ -11,16 +11,15 @@
 
   export default {
     computed: {
-      email() {
+      email () {
         return !this.$store.getters.user ? false : this.$store.getters.user.email
       }
     },
-    created() {
+    created () {
       this.$store.dispatch('fetchUser')
     }
   }
 </script>
-
 
 <style scoped>
   h1, p {
@@ -28,6 +27,6 @@
   }
 
   p {
-    /* color: red; */
+    color: red;
   }
 </style>
