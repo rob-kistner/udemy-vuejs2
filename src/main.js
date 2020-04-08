@@ -16,6 +16,7 @@ const reqInterceptor = axios.interceptors.request.use(config => {
   console.log('Request Interceptor', config);
   return config;
 })
+
 const resInterceptor = axios.interceptors.response.use(res => {
   console.log('Response Interceptor', res)
   return res

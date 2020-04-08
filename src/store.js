@@ -8,11 +8,13 @@ import router from './router'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+
   state: {
     idToken: null,
     userId: null,
     user: null
   },
+
   mutations: {
     authUser (state, userData) {
       state.idToken = userData.token
@@ -26,12 +28,14 @@ export default new Vuex.Store({
       state.userId = null
     }
   },
+
   actions: {
     setLogoutTimer ({commit}, expirationTime) {
       setTimeout(() => {
         commit('clearAuthData')
       }, expirationTime * 1000)
     },
+
     signup ({commit, dispatch}, authData) {
       axios.post('/signupNewUser?key=AIzaSyBeZWMlSLeK86lD_YKQyOlVwj6EQDGrTz4', {
         email: authData.email,
@@ -54,6 +58,7 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
+
     login ({commit, dispatch}, authData) {
       axios.post('/verifyPassword?key=AIzaSyBeZWMlSLeK86lD_YKQyOlVwj6EQDGrTz4', {
         email: authData.email,
@@ -75,6 +80,7 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
+
     tryAutoLogin ({commit}) {
       const token = localStorage.getItem('token')
       if (!token) {
@@ -91,6 +97,7 @@ export default new Vuex.Store({
         userId: userId
       })
     },
+
     logout ({commit}) {
       commit('clearAuthData')
       localStorage.removeItem('expirationDate')
@@ -98,6 +105,7 @@ export default new Vuex.Store({
       localStorage.removeItem('userId')
       router.replace('/signin')
     },
+
     storeUser ({commit, state}, userData) {
       if (!state.idToken) {
         return
@@ -106,6 +114,7 @@ export default new Vuex.Store({
         .then(res => console.log(res))
         .catch(error => console.log(error))
     },
+
     fetchUser ({commit, state}) {
       if (!state.idToken) {
         return
@@ -126,12 +135,17 @@ export default new Vuex.Store({
         .catch(error => console.log(error))
     }
   },
+
   getters: {
+
     user (state) {
       return state.user
     },
+
     isAuthenticated (state) {
       return state.idToken !== null
     }
+
   }
+
 })
